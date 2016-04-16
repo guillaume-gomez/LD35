@@ -59,7 +59,7 @@ function Game ()
         m_viewport.drawTileMap( m_level.getTileMap() ) ;
         if ( m_perso.isAlive() )
         {
-            m_viewport.draw(m_perso.getPlayer());
+            m_perso.secondDraw(m_viewport);
         }
     }
     
@@ -68,7 +68,6 @@ function Game ()
     }
     
     function resetAll() {
-        m_level.setcurrentLevel(1);
         m_perso.setAlive(true);
     }
     
