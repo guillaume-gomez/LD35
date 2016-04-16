@@ -45,7 +45,7 @@ function TileSet (viewport,cell_size )
 
     this.deleteCollisionBox = function(viewport) {
         for (var i = 0; i <  m_collision_boxes.length; i++) {
-            if (viewport.x + viewport.width > m_collision_boxes[ i ].polygon.pos.x) {
+            if (viewport.x - viewport.width > m_collision_boxes[ i ].polygon.pos.x) {
                 m_collision_boxes.splice(i, 1);
             }
         }
@@ -54,7 +54,7 @@ function TileSet (viewport,cell_size )
     this.manageTiles = function(viewport) {
         //delete unecessary tiles
         this.deleteTiles(viewport);
-        //this.deleteCollisionBox(viewport);
+        this.deleteCollisionBox(viewport);
         //add new one
         if (m_max_width_created < viewport.x + viewport.width) {
             m_max_width_created = this.createFloor(m_max_width_created + 15);
