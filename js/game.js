@@ -13,13 +13,15 @@ function Game ()
         gravity = 0.4;
         
         //Viewport
-        m_viewport = new jaws.Viewport({max_x: jaws.width*1.5, max_y: jaws.height*1.5});
+        m_viewport = new jaws.Viewport({max_x: jaws.width*6, max_y: jaws.height*1.5});
          
         m_perso = new Character("foo.png",64,205,85,m_viewport , 'gunFX');
         m_perso.constructor();
         
         m_level = new TileSet(m_viewport, cell_size );
         m_level.constructor();
+
+        m_level.addTiles();
         
         
         m_background = new Sound ('music.ogg','music.mp3');
@@ -49,9 +51,9 @@ function Game ()
         }
 
         m_background.update();
-            
+        m_level.deleteTiles(m_viewport);
         //Infos
-        live_info.innerHTML = jaws.game_loop.fps + " fps. Player: " ;+ parseInt(m_perso.getX()) + "/" + parseInt(m_perso.getY()) + ". ";
+        live_info.innerHTML = jaws.game_loop.fps + " fps. Player: " + parseInt(m_perso.getPosition().x) + "/" + parseInt(m_perso.getPosition().y) + ". ";
            live_info.innerHTML += "Viewport: " + parseInt(m_viewport.x) + "/" + parseInt(m_viewport.y) + ".";
     }
     
@@ -64,14 +66,6 @@ function Game ()
             m_viewport.draw(m_perso.getPlayer());
         }
     }
-    
-   
-    function changeLevel () {
-        m_level.incrementcurrentLevel();
-        m_level.loadLevel();
-        MakeEnnemy();
-    }
-    
     
     function resetLevel () {
         m_perso.setAlive(true);

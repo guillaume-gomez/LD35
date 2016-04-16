@@ -84,6 +84,10 @@ function Character(image,frame_width,frame_height,frame_duration , viewport , ur
             
         
     }
+
+    this.getPosition = function () {
+        return { "x": m_player.x, "y": m_player.y }
+    }
      
      /**
      *@brief : Permet de mouvement du perso
