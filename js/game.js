@@ -15,13 +15,10 @@ function Game ()
         //Viewport
         m_viewport = new jaws.Viewport({max_x: jaws.width*60, max_y: jaws.height*1.5});
          
-        m_perso = new CharacterV2("foo.png",64,205,85, m_viewport , 'gunFX');   
+        m_perso = new CharacterV2("foo.png",64,205,85, m_viewport , 'gunFX');
         
         m_level = new TileSet(m_viewport, cell_size );
         m_level.constructor();
-
-        m_level.addTiles();
-        
         
         m_background = new Sound ('music.ogg','music.mp3');
         m_background.constructor();
@@ -41,7 +38,7 @@ function Game ()
         if ( m_perso.isAlive() )
         {
             m_perso.update();
-            m_perso.move(m_tile_map );
+            m_perso.move(m_tile_map);
             m_viewport.centerAround(m_perso.getPlayer() );
         }
         else
