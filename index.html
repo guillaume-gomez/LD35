@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>LD35 Gomez Guillaume</title>
+    <script src="js/jaws.js"></script>
+    <script src="js/character.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/tileset.js"></script>
+    <script src="js/sound.js"></script>
+    <script src="js/game.js"></script>
+  </head>
+  <body>
+
+    <canvas id="gameCanvas" width="900" height="400">
+      Your browser does not support canvas tag
+    </canvas>
+    </br>
+    </br>
+    <div id="live_info"></div>
+    
+      <fieldset>
+      <legend>Command : </legend>
+      <table id="commands">
+      <tr><td class="keyword"><img src="css/toucheDirectionnelles.png" alt="Flèches directionnelles" /></td><td>: Move </td></tr>
+      <tr><td class="keyword"><img src="css/jump.png" alt="espace , haut"                       /></td><td>: Jump </td></tr>
+        <tr></tr>
+      <tr></tr>
+      <tr></tr>
+      <tr><td class="keyword"><img src="css/s.png" alt="S"                       /></td><td>: Sound(On/Off) </td></tr>
+      <tr><td class="keyword"><img src="css/ctrl.png" alt="Ctrl"                    /></td><td>: Musique (Reprise) </td></tr>
+      <tr><td class="keyword"><img src="css/r.png" alt="r"                    /></td><td>: Reset </td></tr>
+      </table>
+      </fieldset>
+      </br>
+      
+      <div id="debug"></div>
+      
+      <p>A Game made by <a href="https://github.com/guillaume-gomez">Guillaume Gomez</a></p>
+    
+    
+    <h3>jaws log</h3>
+    <div id="jaws-log"></div>
+    <script>
+    function playsOGG() { var audio = new Audio(); return !!audio.canPlayType && audio.canPlayType( 'audio/ogg; codecs="vorbis"' ) }
+    function playsMP3() { var audio = new Audio(); return !!audio.canPlayType && audio.canPlayType( 'audio/mpeg;' ) }
+    
+    window.onload = function()
+    {
+      jaws.assets.root = "assets/";
+      jaws.unpack()
+      jaws.assets.add(["hero.png","floor.png", "foo.png", "test.png", "swich.png", "level1.json"])
+      
+
+      if(playsOGG())      { jaws.assets.add(["music.ogg"]) }
+      else if(playsMP3()) { jaws.assets.add(["music.mp3"]) }
+
+            jaws.start(Game);
+        }
+    </script>
+  </body>
+</html>
