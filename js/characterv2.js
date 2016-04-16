@@ -2,6 +2,7 @@
 * @brief : Classe qui gere le héros 
 **/
 
+
 CharacterV2 = function(image, frame_width, frame_height, frame_duration, viewport, urlSound) {
     this.m_player = new jaws.Sprite({x:150, y: 300 , anchor:"left_bottom"});
     this.m_player.width = 100;
@@ -21,6 +22,7 @@ CharacterV2 = function(image, frame_width, frame_height, frame_duration, viewpor
     this.m_locked = false;
     this.m_goLeft = false;
     this.m_goRight = false;
+    this.my_color = "#F3E686";
 }
 
 CharacterV2.prototype.update = function () {
@@ -59,7 +61,7 @@ CharacterV2.prototype.secondDraw = function(viewport) {
     ctx.lineTo(this.m_player.x - viewport.x, this.m_player.y - viewport.y);
     ctx.lineTo(this.m_player.x + this.m_player.width - viewport.x, this.m_player.y - viewport.y);
     ctx.lineTo(this.m_player.x + this.m_player.width - viewport.x, this.m_player.y - this.m_player.height - viewport.y);
-    ctx.fillStyle = "#F3E686";
+    ctx.fillStyle = this.my_color;
     ctx.closePath();
     ctx.fill();
 }
@@ -74,11 +76,14 @@ CharacterV2.prototype.hurt = function(response) {
    if (heightCharGlobal_A > heightGlobal_B) {
         toSub = heightChar - toSub; 
         this.m_player.height -= Math.ceil(toSub);
+        this.m_vie = (this.m_player.height > MIN_HEIGHT)
    } 
    else
    {
         toSub = heightB - toSub;
    }
+   this.my_color = getRandomColor();
+
 
 }
 
@@ -165,7 +170,7 @@ CharacterV2.prototype.setY = function( _y)
 
 CharacterV2.prototype.isAlive = function  ()
 {
-    return this.m_vie;
+    return (this.m_vie && this.m_player.y < FLOOR_Y *2 );
 }
 
 

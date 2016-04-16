@@ -1,4 +1,7 @@
 
+const FLOOR_Y = 570
+const MIN_HEIGHT = 5;
+
 function Game ()
 {
     var m_perso;
@@ -20,6 +23,7 @@ function Game ()
         m_level = new TileSet(m_viewport, cell_size );
         m_level.constructor();
         m_level.createColumn(150, 510, 4);
+        m_level.createColumn(500, 540, 2);
         
         m_background = new Sound ('music.ogg','music.mp3');
         m_background.constructor();
@@ -66,6 +70,8 @@ function Game ()
     
     function resetLevel () {
         m_perso.setAlive(true);
+        m_perso.setX(100);
+        m_perso.setY(150);
     }
     
     function resetAll() {
