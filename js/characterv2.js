@@ -8,7 +8,8 @@ CharacterV2 = function(image, frame_width, frame_height, frame_duration, viewpor
     this.m_player.setImage(this.m_player.animation.frames[0]);
     this.m_player.go_right = this.m_player.animation.slice(0,3);
     this.m_player.go_left = this.m_player.animation.slice(4,7);
-    this.m_player.vx = this.m_player.vy = 0;
+    this.m_player.vx = 2;
+    this.m_player.vy = 0;
     this.m_player.can_jump = true;
 
     this.m_speed = 2;
@@ -68,15 +69,6 @@ CharacterV2.prototype.getPosition = function () {
      
 CharacterV2.prototype.move = function (tile_map)
 {
-    //gestion de le reflexion;
-    var x = this.m_player.x;
-    var y = this.m_player.y;
-    y -=  this.m_player.height*3/4 - 4 ; 
-    if ( this.m_sens  == 1)
-    {
-        x += this.m_player.width ;
-    }
-
     // Gravity
     this.m_player.vy += gravity;
     this.m_locked = false ;
