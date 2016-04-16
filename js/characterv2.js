@@ -52,15 +52,16 @@ CharacterV2.prototype.update = function () {
 }
 
 CharacterV2.prototype.secondDraw = function(viewport) {
-    var cxt = jaws.context;
-    cxt.fillStyle = '#f00';
-    cxt.beginPath();
-    cxt.moveTo(this.m_player.x - viewport.x, this.m_player.y - this.m_player.height - viewport.y);
-    cxt.lineTo(this.m_player.x - viewport.x, this.m_player.y - viewport.y);
-    cxt.lineTo(this.m_player.x + this.m_player.width - viewport.x, this.m_player.y - viewport.y);
-    cxt.lineTo(this.m_player.x + this.m_player.width - viewport.x, this.m_player.y - this.m_player.height - viewport.y);
-    cxt.closePath();
-    cxt.fill();
+    var ctx = jaws.context;
+   
+    ctx.beginPath();
+    ctx.moveTo(this.m_player.x - viewport.x, this.m_player.y - this.m_player.height - viewport.y);
+    ctx.lineTo(this.m_player.x - viewport.x, this.m_player.y - viewport.y);
+    ctx.lineTo(this.m_player.x + this.m_player.width - viewport.x, this.m_player.y - viewport.y);
+    ctx.lineTo(this.m_player.x + this.m_player.width - viewport.x, this.m_player.y - this.m_player.height - viewport.y);
+    ctx.fillStyle = "#F3E686";
+    ctx.closePath();
+    ctx.fill();
 }
 
 CharacterV2.prototype.getPosition = function () {
