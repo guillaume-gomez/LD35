@@ -27,8 +27,6 @@ CharacterV2.prototype.init = function() {
     this.m_vie = true;
     this.m_sens = 1;
     this.m_locked = false;
-    this.m_goLeft = false;
-    this.m_goRight = false;
     this.my_color = "#F3E686";
 }
 
@@ -45,7 +43,6 @@ CharacterV2.prototype.update = function () {
     else if (jaws.pressed("right") || jaws.pressed("d"))
     { 
         this.m_player.vx += this.m_speed;
-        this.m_goRight = true;
         this.m_sens = 1 ;
     }    
     
@@ -68,8 +65,10 @@ CharacterV2.prototype.secondDraw = function(viewport) {
     ctx.lineTo(this.m_player.x - viewport.x, this.m_player.y - viewport.y);
     ctx.lineTo(this.m_player.x + this.m_player.width - viewport.x, this.m_player.y - viewport.y);
     ctx.lineTo(this.m_player.x + this.m_player.width - viewport.x, this.m_player.y - this.m_player.height - viewport.y);
-    ctx.fillStyle = this.my_color;
     ctx.closePath();
+    ctx.fillStyle = this.my_color;
+    ctx.strokeStyle = '#ff0000';
+    ctx.stroke();
     ctx.fill();
 }
 
@@ -140,7 +139,7 @@ CharacterV2.prototype.move = function (level)
     
 CharacterV2.prototype.show = function () 
 {
-    this.m_goLeft = this.m_goRight = false ;
+
 }
     
 
