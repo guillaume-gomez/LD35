@@ -15,8 +15,7 @@ function Game ()
         //Viewport
         m_viewport = new jaws.Viewport({max_x: jaws.width*60, max_y: jaws.height*1.5});
          
-        m_perso = new Character("foo.png",64,205,85, m_viewport , 'gunFX');
-        m_perso.constructor();
+        m_perso = new CharacterV2("foo.png",64,205,85, m_viewport , 'gunFX');   
         
         m_level = new TileSet(m_viewport, cell_size );
         m_level.constructor();
@@ -55,7 +54,6 @@ function Game ()
         //Infos
         live_info.innerHTML = jaws.game_loop.fps + " fps. Player: " + parseInt(m_perso.getPosition().x) + "/" + parseInt(m_perso.getPosition().y) + ". ";
         live_info.innerHTML += "Viewport: " + parseInt(m_viewport.x) + "/" + parseInt(m_viewport.y) + ".";
-
     }
     
    
