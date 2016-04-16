@@ -14,7 +14,7 @@ Particle = function(x, y) {
     this.position = { x: x, y: y };
     this.shift = { x: x, y: y };
     this.angle = 0;
-    this.speed = 0.01+Math.random()*0.03;
+    this.speed = 0.01+Math.random()*0.06;
     this.force = 1 - (Math.random()*0.05);
     this.fillColor = '#ffffff';
     this.orbit = 1;
@@ -34,7 +34,7 @@ Particles.prototype.createParticles = function(position ) {
 }
 
 
-Particles.prototype.draw = function(viewport, position) {
+Particles.prototype.draw = function(viewport, pointInterest) {
     // Render the particles
     for (i = 0, ilen = this.particles.length; i < ilen; i++) {
         particle = this.particles[i];
@@ -42,8 +42,10 @@ Particles.prototype.draw = function(viewport, position) {
         var currentDistance = -1;
         var closestDistance = -1;
         var closestPointOfInterest = null;
-        this.pointOfInterest.position.x = position.x;
-        this.pointOfInterest.position.y = position.y;
+        this.pointOfInterest.position.x = pointInterest.x;
+        this.pointOfInterest.position.y = pointInterest.y;
+        console.log(pointInterest.orbit)
+        this.pointOfInterest.orbit = pointInterest.orbit;
         
         // For each particle, we check what the closes magnet is        
         currentDistance = distanceBetween( particle.position, this.pointOfInterest.position ) - ( this.pointOfInterest.orbit * 0.5 );

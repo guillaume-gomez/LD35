@@ -66,7 +66,7 @@ function TileSet (viewport,cell_size )
         this.deleteCollisionBox(viewport);
         //add new one
         if (m_max_width_created < viewport.x + viewport.width) {
-            m_max_width_created = this.createFloor(m_max_width_created + 15);
+            m_max_width_created = this.createFloor(m_max_width_created);
         }   
     }
 

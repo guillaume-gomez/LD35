@@ -80,7 +80,8 @@ CharacterV2.prototype.secondDraw = function(viewport) {
 
     this.m_particles.draw(viewport, {
             x:this.m_player.x + this.m_player.width/2,
-            y:this.m_player.y - this.m_player.height/2
+            y:this.m_player.y - this.m_player.height/2,
+            orbit:this.m_player.width/2
         }
     );
 }
@@ -99,8 +100,8 @@ CharacterV2.prototype.hurt = function(response) {
    else
    {
         toSub = Math.ceil(heightB - toSub);
-        this.m_player.y -= toSub - 1;
-        this.m_player.height -= Math.ceil(toSub);
+        this.m_player.y = Math.ceil(this.m_player.y - toSub - 1);
+        this.m_player.height -= Math.ceil(toSub - 1);
 
    }
    this.m_vie = (this.m_player.height > MIN_HEIGHT);
