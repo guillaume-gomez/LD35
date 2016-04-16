@@ -13,7 +13,7 @@ function Game ()
         gravity = 0.4;
         
         //Viewport
-        m_viewport = new jaws.Viewport({max_x: jaws.width*6, max_y: jaws.height*1.5});
+        m_viewport = new jaws.Viewport({max_x: jaws.width*60, max_y: jaws.height*1.5});
          
         m_perso = new Character("foo.png",64,205,85, m_viewport , 'gunFX');
         m_perso.constructor();
@@ -51,10 +51,11 @@ function Game ()
         }
 
         m_background.update();
-        m_level.deleteTiles(m_viewport);
+        m_level.manageTiles(m_viewport);
         //Infos
         live_info.innerHTML = jaws.game_loop.fps + " fps. Player: " + parseInt(m_perso.getPosition().x) + "/" + parseInt(m_perso.getPosition().y) + ". ";
-           live_info.innerHTML += "Viewport: " + parseInt(m_viewport.x) + "/" + parseInt(m_viewport.y) + ".";
+        live_info.innerHTML += "Viewport: " + parseInt(m_viewport.x) + "/" + parseInt(m_viewport.y) + ".";
+
     }
     
    
@@ -73,7 +74,6 @@ function Game ()
     
     function resetAll() {
         m_level.setcurrentLevel(1);
-        m_level.loadLevel();
         m_perso.setAlive(true);
     }
     
