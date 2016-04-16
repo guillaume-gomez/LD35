@@ -5,6 +5,13 @@
 
 CharacterV2 = function(image, frame_width, frame_height, frame_duration, viewport, urlSound) {
     this.m_player = new jaws.Sprite({x:150, y: 300 , anchor:"left_bottom"});
+    this.init();
+}
+
+CharacterV2.prototype.init = function() {
+    this.m_player.x = 150;
+    this.m_player.y = 300;
+
     this.m_player.width = 100;
     this.m_player.height = 100;
     this.m_player.left_offset   = this.m_player.width * this.m_player.anchor_x

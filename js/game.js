@@ -69,9 +69,8 @@ function Game ()
     }
     
     function resetLevel () {
-        m_perso.setAlive(true);
-        m_perso.setX(100);
-        m_perso.setY(150);
+        m_perso.init();
+        m_level.reset();
     }
     
     function resetAll() {

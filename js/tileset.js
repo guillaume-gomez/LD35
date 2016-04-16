@@ -2,8 +2,6 @@
 * @brief : Classe qui gere le niveau
 **/
 
-const FLOOR_Y = 570
-
 function TileSet (viewport,cell_size )
 {   
     var m_viewport;
@@ -16,6 +14,13 @@ function TileSet (viewport,cell_size )
         m_currentLevel = 1;
         m_tile_map = new jaws.TileMap({size : [m_viewport.max_x/cell_size+10,m_viewport.max_y/cell_size+10] , cell_size: [cell_size,cell_size]});
         m_spriteList = new jaws.SpriteList();
+        m_max_width_created = 0;
+        m_collision_boxes = [];
+    }
+
+    this.reset = function() {
+        m_viewport = viewport ;
+        m_currentLevel = 1;
         m_max_width_created = 0;
         m_collision_boxes = [];
     }
