@@ -83,12 +83,15 @@ CharacterV2.prototype.hurt = function(response) {
    if (heightCharGlobal_A > heightGlobal_B) {
         toSub = heightChar - toSub; 
         this.m_player.height -= Math.ceil(toSub);
-        this.m_vie = (this.m_player.height > MIN_HEIGHT)
    } 
    else
    {
-        toSub = heightB - toSub;
+        toSub = Math.ceil(heightB - toSub);
+        this.m_player.y -= toSub - 1;
+        this.m_player.height -= Math.ceil(toSub);
+
    }
+   this.m_vie = (this.m_player.height > MIN_HEIGHT);
    this.my_color = getRandomColor();
 
 
