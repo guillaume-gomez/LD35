@@ -44,7 +44,6 @@ Particles.prototype.draw = function(viewport, pointInterest) {
         var closestPointOfInterest = null;
         this.pointOfInterest.position.x = pointInterest.x;
         this.pointOfInterest.position.y = pointInterest.y;
-        console.log(pointInterest.orbit)
         this.pointOfInterest.orbit = pointInterest.orbit;
         
         // For each particle, we check what the closes magnet is        
