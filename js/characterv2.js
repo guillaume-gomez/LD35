@@ -42,7 +42,7 @@ CharacterV2.prototype.update = function () {
     //Si touche haut enfoncé
      if (jaws.pressed("up") || jaws.pressed("space"))
     {
-        if(this.this.m_player.can_jump) 
+        if(this.m_player.can_jump) 
         { 
             this.m_player.vy -= this.m_jumpHeight;
             this.m_player.can_jump = false;
