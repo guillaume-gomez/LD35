@@ -4,8 +4,8 @@
 
 CharacterV2 = function(image, frame_width, frame_height, frame_duration, viewport, urlSound) {
     this.m_player = new jaws.Sprite({x:150, y: 300 , anchor:"left_bottom"});
-    this.m_player.width = 50;
-    this.m_player.height = 50;
+    this.m_player.width = 100;
+    this.m_player.height = 100;
     this.m_player.left_offset   = this.m_player.width * this.m_player.anchor_x
     this.m_player.top_offset    = this.m_player.height * this.m_player.anchor_y
     this.m_player.right_offset  = this.m_player.width * (1.0 - this.m_player.anchor_x)
@@ -65,7 +65,21 @@ CharacterV2.prototype.secondDraw = function(viewport) {
 }
 
 CharacterV2.prototype.hurt = function(response) {
-   console.log(response.overlapV);
+   var heightChar = response.a.points[3].y;
+   var heightB = response.b.points[3].y;
+   var heightCharGlobal_A = response.a.pos.y + heightChar;
+   var heightGlobal_B = response.b.pos.y + heightB;
+
+   var toSub = Math.abs(heightGlobal_B - heightCharGlobal_A);
+   if (heightCharGlobal_A > heightGlobal_B) {
+        toSub = heightChar - toSub; 
+        this.m_player.height -= Math.ceil(toSub);
+   } 
+   else
+   {
+        toSub = heightB - toSub;
+   }
+
 }
 
 CharacterV2.prototype.getPosition = function () {
