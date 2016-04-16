@@ -3,9 +3,9 @@
 **/
 
 CharacterV2 = function(image, frame_width, frame_height, frame_duration, viewport, urlSound) {
-    this.m_player = new jaws.Sprite({x:150, y: 100 , anchor:"left_bottom"});
-    this.m_player.width = 30;
-    this.m_player.height = 30;
+    this.m_player = new jaws.Sprite({x:150, y: 300 , anchor:"left_bottom"});
+    this.m_player.width = 50;
+    this.m_player.height = 50;
     this.m_player.left_offset   = this.m_player.width * this.m_player.anchor_x
     this.m_player.top_offset    = this.m_player.height * this.m_player.anchor_y
     this.m_player.right_offset  = this.m_player.width * (1.0 - this.m_player.anchor_x)
@@ -13,8 +13,7 @@ CharacterV2 = function(image, frame_width, frame_height, frame_duration, viewpor
     this.m_player.vx = 2;
     this.m_player.vy = 0;
     this.m_player.can_jump = true;
-    this.hitbox = new SAT.Box(new SAT.Vector(this.m_player.x, this.m_player.y), this.m_player.width, this.m_player.height);
-
+   
     this.m_speed = 2;
     this.m_jumpHeight = 8;
     this.m_vie = true;
@@ -65,6 +64,10 @@ CharacterV2.prototype.secondDraw = function(viewport) {
     ctx.fill();
 }
 
+CharacterV2.prototype.hurt = function(response) {
+   console.log(response.overlapV);
+}
+
 CharacterV2.prototype.getPosition = function () {
     return { "x": this.m_player.x, "y": this.m_player.y }
 }
@@ -76,9 +79,11 @@ CharacterV2.prototype.move = function (level)
     this.m_player.vy += gravity;
     
     this.m_player.move( this.m_player.vx , 0 );
-    var hitbox_vx = new SAT.Box(new SAT.Vector(this.m_player.x, this.m_player.y), this.m_player.width, this.m_player.height);
-    if(level.collidedAt(hitbox_vx))
+    var hitbox_vx = new SAT.Box(new SAT.Vector(this.m_player.x, this.m_player.y - this.m_player.height), this.m_player.width, this.m_player.height);
+    var response = level.collidedAt(hitbox_vx);
+    if(response)
     { 
+        this.hurt(response);
         this.m_sens = (this.m_player.vx < 0) ? -1 : 1 ;
         this.m_locked = true ;
         this.m_player.move( - this.m_player.vx , 0 );
@@ -87,7 +92,7 @@ CharacterV2.prototype.move = function (level)
     
     this.m_player.move( 0 , this.m_player.vy );
     //Collision objets
-    var hitbox_vy = new SAT.Box(new SAT.Vector(this.m_player.x, this.m_player.y), this.m_player.width, this.m_player.height);
+    var hitbox_vy = new SAT.Box(new SAT.Vector(this.m_player.x, this.m_player.y - this.m_player.height), this.m_player.width, this.m_player.height);
     var response = level.collidedAt(hitbox_vy);
     if(response) 
     { 
@@ -102,11 +107,6 @@ CharacterV2.prototype.move = function (level)
         }    
         this.m_player.vy = 0;
     }
-
-
-    this.hitbox.pos.x = this.m_player.x;
-    this.hitbox.pos.y = this.m_player.y;
-
 }
     
 CharacterV2.prototype.show = function () 

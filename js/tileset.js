@@ -69,7 +69,7 @@ function TileSet (viewport,cell_size )
         }
         m_tile_map.push(blocks);
 
-        var b = new SAT.Box(new SAT.Vector(offset, FLOOR_Y + m_tile_map.cell_size[1]), m_viewport.width, m_tile_map.cell_size[1]);
+        var b = new SAT.Box(new SAT.Vector(offset, FLOOR_Y), m_viewport.width, m_tile_map.cell_size[1]);
         m_collision_boxes.push({polygon: b, offset: offset});
 
         return offset + m_viewport.width;
@@ -81,7 +81,7 @@ function TileSet (viewport,cell_size )
             blocks.push( new Sprite({image: "floor.png", x: offset, y: yOrigin -  nb * m_tile_map.cell_size[1]}));
         }
         m_tile_map.push(blocks);
-        var b = new SAT.Box(new SAT.Vector(offset,  m_tile_map.cell_size[1] + yOrigin - nbBlocs * m_tile_map.cell_size[1]), m_tile_map.cell_size[0], nbBlocs * m_tile_map.cell_size[1]);
+        var b = new SAT.Box(new SAT.Vector(offset, yOrigin - nbBlocs * m_tile_map.cell_size[1]), m_tile_map.cell_size[0], nbBlocs * m_tile_map.cell_size[1]);
         m_collision_boxes.push({polygon: b, offset: offset});
 
         return offset;
