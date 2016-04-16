@@ -19,6 +19,7 @@ function Game ()
         
         m_level = new TileSet(m_viewport, cell_size );
         m_level.constructor();
+        m_level.createColumn(150, 510, 4);
         
         m_background = new Sound ('music.ogg','music.mp3');
         m_background.constructor();
@@ -38,7 +39,7 @@ function Game ()
         if ( m_perso.isAlive() )
         {
             m_perso.update();
-            m_perso.move(m_tile_map);
+            m_perso.move(m_level);
             m_viewport.centerAround(m_perso.getPlayer() );
         }
         else
