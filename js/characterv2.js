@@ -28,6 +28,13 @@ CharacterV2.prototype.init = function() {
     this.m_sens = 1;
     this.m_locked = false;
     this.my_color = "#F3E686";
+
+    this.m_particles = new Particles(
+        {
+            x:this.m_player.x + this.m_player.width/2,
+            y:this.m_player.y - this.m_player.height/2
+        }
+    );
 }
 
 CharacterV2.prototype.update = function () {
@@ -70,6 +77,12 @@ CharacterV2.prototype.secondDraw = function(viewport) {
     ctx.strokeStyle = '#ff0000';
     ctx.stroke();
     ctx.fill();
+
+    this.m_particles.draw(viewport, {
+            x:this.m_player.x + this.m_player.width/2,
+            y:this.m_player.y - this.m_player.height/2
+        }
+    );
 }
 
 CharacterV2.prototype.hurt = function(response) {
