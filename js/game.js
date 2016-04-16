@@ -15,7 +15,7 @@ function Game ()
         //Viewport
         m_viewport = new jaws.Viewport({max_x: jaws.width*6, max_y: jaws.height*1.5});
          
-        m_perso = new Character("foo.png",64,205,85,m_viewport , 'gunFX');
+        m_perso = new Character("foo.png",64,205,85, m_viewport , 'gunFX');
         m_perso.constructor();
         
         m_level = new TileSet(m_viewport, cell_size );
