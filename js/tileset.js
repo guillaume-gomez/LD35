@@ -8,7 +8,6 @@ function TileSet (viewport,cell_size )
 {   
     var m_viewport;
     var m_spriteList;
-    var m_currentLevel;
     var m_max_width_created;
 
     this.constructor  = function () {
@@ -26,18 +25,6 @@ function TileSet (viewport,cell_size )
     
     this.getTileMap = function () {
         return m_tile_map;
-    }
-
-    this.getcurrentLevel = function () {
-        return  m_currentLevel;
-    }
-    
-    this.setcurrentLevel = function (value) {
-         m_currentLevel = value;
-    }
-    
-    this.incrementcurrentLevel = function () {
-         m_currentLevel++;
     }
 
     this.deleteTiles = function(viewport) {
@@ -59,14 +46,12 @@ function TileSet (viewport,cell_size )
         this.deleteTiles(viewport);
         //add new one
         if (m_max_width_created < viewport.x + viewport.width) {
-            debugger
-            m_max_width_created = this.createFloor(m_max_width_created + 20);
+            m_max_width_created = this.createFloor(m_max_width_created + 15);
         }
     }
 
     this.createFloor = function(offset) {
         var blocks = new SpriteList();
-        debugger
         for (var x = 0; x < m_viewport.width; x += cell_size) {
 
             blocks.push( new Sprite({image: "test.png", x: offset + x, y: FLOOR_Y}));
@@ -75,11 +60,13 @@ function TileSet (viewport,cell_size )
         return offset + m_viewport.width;
     }
 
-    this.addTiles = function(viewport) {
-        var blocks = new SpriteList();
-        for(var i = 0; i < 5; ++i) {
-            blocks.push( new Sprite({image: "floor.png", x: (1000)+(i+1)*cell_size, y: 500% cell_size}) )
-        }
-        m_tile_map.push(blocks);
-    }
+    // this.loadLevel = function  ()
+    // {
+    
+    //    m_spriteList = new jaws.SpriteList();
+    //    m_spriteList.load(jaws.assets.get("level1.json")); 
+    //     m_tile_map = new jaws.TileMap({size : [m_viewport.max_x/cell_size+10,m_viewport.max_y/cell_size+10] ,cell_size: [cell_size,cell_size]});
+    //     m_tile_map.push(m_spriteList);
+
+    // }
 }
