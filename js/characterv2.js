@@ -3,24 +3,24 @@
 **/
 
 CharacterV2 = function(image, frame_width, frame_height, frame_duration, viewport, urlSound) {
-    this.m_player = new jaws.Sprite({ scale : 0.45 ,x:100, y: 200 , anchor:"left_bottom"});
-    this.m_player.animation = new jaws.Animation({sprite_sheet: jaws.assets.get(image), frame_size: [frame_width,frame_height], frame_duration: frame_duration , orientation :"right"});
-    this.m_player.setImage(this.m_player.animation.frames[0]);
-    this.m_player.go_right = this.m_player.animation.slice(0,3);
-    this.m_player.go_left = this.m_player.animation.slice(4,7);
+    this.m_player = new jaws.Sprite({x:100, y: 200 , anchor:"left_bottom"});
+    this.m_player.width = 40;
+    this.m_player.height = 40;
+    this.m_player.left_offset   = this.m_player.width * this.m_player.anchor_x
+    this.m_player.top_offset    = this.m_player.height * this.m_player.anchor_y
+    this.m_player.right_offset  = this.m_player.width * (1.0 - this.m_player.anchor_x)
+    this.m_player.bottom_offset = this.m_player.height * (1.0 - this.m_player.anchor_y)
     this.m_player.vx = 2;
     this.m_player.vy = 0;
     this.m_player.can_jump = true;
 
     this.m_speed = 2;
     this.m_jumpHeight = 8;
-
     this.m_vie = true;
     this.m_sens = 1;
     this.m_locked = false;
     this.m_goLeft = false;
     this.m_goRight = false;
-
 }
 
 CharacterV2.prototype.update = function () {
@@ -51,17 +51,17 @@ CharacterV2.prototype.update = function () {
     }
 }
 
-// Ray.prototype.draw = function(viewport) {
-//     var cxt = jaws.context;
-//     cxt.fillStyle = '#f00';
-//     cxt.beginPath();
-//     cxt.moveTo(this.topLeft.x - viewport.x, this.topLeft.y - viewport.y);
-//     cxt.lineTo(this.bottomLeft.x - viewport.x, this.bottomLeft.y  - viewport.y);
-//     cxt.lineTo(this.bottomRight.x - viewport.x, this.bottomRight.y  - viewport.y);
-//     cxt.lineTo(this.topRight.x -viewport.x, this.topRight.y  - viewport.y);
-//     cxt.closePath();
-//     cxt.fill();
-// };
+CharacterV2.prototype.secondDraw = function(viewport) {
+    var cxt = jaws.context;
+    cxt.fillStyle = '#f00';
+    cxt.beginPath();
+    cxt.moveTo(this.m_player.x - viewport.x, this.m_player.y - this.m_player.height - viewport.y);
+    cxt.lineTo(this.m_player.x - viewport.x, this.m_player.y - viewport.y);
+    cxt.lineTo(this.m_player.x + this.m_player.width - viewport.x, this.m_player.y - viewport.y);
+    cxt.lineTo(this.m_player.x + this.m_player.width - viewport.x, this.m_player.y - this.m_player.height - viewport.y);
+    cxt.closePath();
+    cxt.fill();
+}
 
 CharacterV2.prototype.getPosition = function () {
     return { "x": this.m_player.x, "y": this.m_player.y }
@@ -73,7 +73,7 @@ CharacterV2.prototype.move = function (tile_map)
     this.m_player.vy += gravity;
     this.m_locked = false ;
         this.m_player.move( this.m_player.vx , 0 );
-        if(tile_map.atRect(this.getRect()).length > 0)
+        if(tile_map.atRect(this.m_player.rect()).length > 0)
         { 
             this.m_sens = (this.m_player.vx < 0) ? -1 : 1 ;
             this.m_locked = true ;
@@ -83,7 +83,7 @@ CharacterV2.prototype.move = function (tile_map)
         
         this.m_player.move( 0 , this.m_player.vy );
         //Collision objets
-        blocks_y = tile_map.atRect(this.getRect())[0];
+        blocks_y = tile_map.atRect(this.m_player.rect())[0];
         if( blocks_y ) 
         { 
             if(this.m_player.vy > 0 )//Falling
@@ -101,30 +101,6 @@ CharacterV2.prototype.move = function (tile_map)
     
 CharacterV2.prototype.show = function () 
 {
-    if ( this.m_sens  == 1 )
-    {
-         if ( this.m_goRight )
-        {
-            this.m_player.setImage( this.m_player.go_right.next() );
-        }            
-        else
-        {
-            this.m_player.setImage( this.m_player.animation.frames[0] );
-        }
-    }
-    else 
-    {
-         if ( this.m_goLeft )
-        {
-            this.m_player.setImage( this.m_player.go_left.next() );
-        }
-
-        else
-        {
-            this.m_player.setImage( this.m_player.animation.frames[4] );
-        }
-        
-    }
     this.m_goLeft = this.m_goRight = false ;
 }
     
@@ -174,8 +150,7 @@ CharacterV2.prototype.setAlive = function ( vie )
     this.m_vie = vie ;
 }
 
-CharacterV2.prototype.getRect = function ()
+CharacterV2.prototype.rect = function ()
 {
-    var temp = new jaws.Rect( this.m_player.rect().x , this.m_player.rect().y  , 45 , this.m_player.rect().height );
-    return temp;
+    return this.m_player.rect();
 }
