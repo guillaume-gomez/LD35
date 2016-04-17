@@ -1,6 +1,10 @@
 /**
 * @brief : Classe qui gere le niveau
 **/
+const BORNE_MAX = 100;
+const SELECT_COLUMN = 6;
+const MAX_NB_BLOCS = 12;
+const MIN_Y_ORIGIN = 500; 
 
 function TileSet (viewport,cell_size )
 {   
@@ -8,6 +12,7 @@ function TileSet (viewport,cell_size )
     var m_spriteList;
     var m_max_width_created;
     var m_collision_boxes;
+    var m_timer;
 
     this.constructor  = function () {
         m_viewport = viewport ;
@@ -67,7 +72,13 @@ function TileSet (viewport,cell_size )
         //add new one
         if (m_max_width_created < viewport.x + viewport.width) {
             m_max_width_created = this.createFloor(m_max_width_created);
-        }   
+        }
+        var random = Math.floor(Math.random() * BORNE_MAX) + 1;
+        if (random == SELECT_COLUMN) {
+            var yOrigin = MIN_Y_ORIGIN;
+            var nbBlocs = Math.floor(Math.random() * MAX_NB_BLOCS) + 1;
+            m_max_width_created = this.createColumn(m_max_width_created, yOrigin, nbBlocs);
+        }
     }
 
     this.createFloor = function(offset) {

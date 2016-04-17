@@ -153,7 +153,7 @@ CharacterV2.prototype.move = function (level)
     
 CharacterV2.prototype.show = function () 
 {
-
+    //this.m_player.vx = this.m_speed;
 }
     
 
