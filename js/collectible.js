@@ -1,9 +1,15 @@
 const RANDOM_BONUS = 100;
 const CREATE_BONUS = 8;
+
 const TYPE_BONUS_HEIGHT = "bonus_height";
 const TYPE_BONUS_WIDTH = "bonus_width";
+const WIDTH_TRIANGLE = 12;
+const HEIGHT_TRIANGLE = 12;
+const WIDTH_LINE = 20;
+const HEIGHT_LINE = 7;
+
 const NB_COLLECTIBLE = 2;
-const TIMER_COLLECTIBLES = 2000;
+const TIMER_COLLECTIBLES = 1500;//15000
 
 
 Collectible = function(x, y, width, height) {
@@ -13,7 +19,6 @@ Collectible = function(x, y, width, height) {
     this.height = height;
     this.color = '#00ff00';
     this.type = "Unknown";
-    //this.m_scoring = new jaws.Text({text: this.text, x: x, y: y});
 }
 
 Collectible.prototype.draw = function(viewport) {
@@ -51,10 +56,10 @@ Collectibles.prototype.manageCollectibles = function(viewport) {
         y = 500;
         switch(collectibleId) {
             case 1:
-                collectible = new BonusHeight(x, y, 30, 30);
+                collectible = new BonusWidth(x, y, WIDTH_TRIANGLE * 2 + WIDTH_LINE, HEIGHT_TRIANGLE);
             break;
             case 2:
-                collectible = new BonusWidth(x, y, 30, 30);
+                collectible = new BonusHeight(x, y, WIDTH_TRIANGLE, HEIGHT_TRIANGLE * 2 + HEIGHT_LINE);
             break;
         }
         this.createCollectible(x, collectible);
@@ -82,25 +87,95 @@ Collectibles.prototype.draw = function(viewport) {
 
 
 
-BonusHeight = function (x, y, width, height) {
+BonusWidth = function (x, y, width, height) {
     Collectible.call(this, x, y, width, height);
     this.color = "#00f000";
     this.type = TYPE_BONUS_HEIGHT;
+    this.widthTriangle = WIDTH_TRIANGLE;
+    this.heightTriangle = HEIGHT_TRIANGLE;
+    this.widthLine = WIDTH_LINE;
+    this.heightLine = HEIGHT_LINE;
 
 }
 
-BonusHeight.prototype.draw = function(viewport) {
-   Collectible.prototype.draw.call(this, viewport);
+
+BonusWidth.prototype.draw = function(viewport) {
+    var ctx = jaws.context;
+    //left triangle
+    ctx.beginPath();
+    ctx.moveTo(this.x - viewport.x + this.widthTriangle/2, this.y - this.heightTriangle - viewport.y);
+    ctx.lineTo(this.x + this.widthTriangle/2 + this.widthTriangle - viewport.x, this.y - viewport.y);
+    ctx.lineTo(this.x - this.widthTriangle/2 - viewport.x, this.y - viewport.y);
+    ctx.fill();
+    ctx.fillStyle = this.color;
+    ctx.fill();
+
+    //central stripe
+    var newOrigin = {x: this.x + this.widthTriangle/2 - this.heightLine/2, y: this.y + this.heightLine + this.heightTriangle}
+    ctx.beginPath();
+    ctx.moveTo(newOrigin.x - viewport.x, newOrigin.y - this.widthLine - viewport.y);
+    ctx.lineTo(newOrigin.x - viewport.x, newOrigin.y - viewport.y);
+    ctx.lineTo(newOrigin.x + this.heightLine - viewport.x, newOrigin.y - viewport.y);
+    ctx.lineTo(newOrigin.x + this.heightLine - viewport.x, newOrigin.y - this.widthLine - viewport.y);
+    ctx.closePath();
+    ctx.fillStyle = this.color;
+    ctx.fill();
+
+    //right triangle
+    newOrigin = {x: this.x, y: this.y + this.heightLine + this.heightTriangle} 
+    ctx.beginPath();
+    ctx.moveTo(newOrigin.x - viewport.x + this.widthTriangle/2, newOrigin.y + this.heightTriangle - viewport.y);
+    ctx.lineTo(newOrigin.x +this.widthTriangle/2 + this.widthTriangle - viewport.x, newOrigin.y - viewport.y);
+    ctx.lineTo(newOrigin.x - this.widthTriangle/2 - viewport.x, newOrigin.y - viewport.y);
+    ctx.fill();
+    ctx.fillStyle = this.color;
+    ctx.fill();
 }
 
 
-BonusWidth = function (x, y, width, height) {
+
+BonusHeight = function (x, y, width, height) {
     Collectible.call(this, x, y, width, height);
     this.color = "#00f0ff";
     this.type = TYPE_BONUS_WIDTH;
+    this.widthTriangle = WIDTH_TRIANGLE;
+    this.heightTriangle = HEIGHT_TRIANGLE;
+    this.widthLine = 20;
+    this.heightLine = 7;
 
 }
 
-BonusWidth.prototype.draw = function(viewport) {
-   Collectible.prototype.draw.call(this, viewport);
+
+BonusHeight.prototype.draw = function(viewport) {
+    var ctx = jaws.context;
+    //left triangle
+    ctx.beginPath();
+    ctx.moveTo(this.x - viewport.x, this.y - viewport.y);
+    ctx.lineTo(this.x + this.widthTriangle - viewport.x, this.y - this.heightTriangle - viewport.y);
+    ctx.lineTo(this.x + this.widthTriangle - viewport.x, this.y + this.heightTriangle - viewport.y);
+    ctx.fill();
+    ctx.fillStyle = this.color;
+    ctx.fill();
+
+    //central stripe
+    var newOrigin = {x: this.x + this.widthTriangle, y: this.y + this.heightLine/2}
+    ctx.beginPath();
+    ctx.moveTo(newOrigin.x - viewport.x, newOrigin.y - this.heightLine - viewport.y);
+    ctx.lineTo(newOrigin.x - viewport.x, newOrigin.y - viewport.y);
+    ctx.lineTo(newOrigin.x + this.widthLine - viewport.x, newOrigin.y - viewport.y);
+    ctx.lineTo(newOrigin.x + this.widthLine - viewport.x, newOrigin.y - this.heightLine - viewport.y);
+    ctx.closePath();
+    ctx.fillStyle = this.color;
+    ctx.fill();
+
+    // right triangle
+    newOrigin = {x: newOrigin.x + this.widthLine, y: this.y} 
+    ctx.beginPath();
+    ctx.moveTo(newOrigin.x + this.widthTriangle - viewport.x, newOrigin.y - viewport.y);
+    ctx.lineTo(newOrigin.x - viewport.x, newOrigin.y - this.heightTriangle - viewport.y);
+    ctx.lineTo(newOrigin.x - viewport.x, newOrigin.y + this.heightTriangle - viewport.y);
+    ctx.fill();
+    ctx.fillStyle = this.color;
+    ctx.fill();
+
 }
