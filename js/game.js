@@ -81,9 +81,9 @@ function Game ()
     }
     
     function resetLevel () {
-        m_perso.init();
-        m_level.reset();
         {jaws.switchGameState(GameOver) }
+        //m_perso.init();
+        //m_level.reset();
     }
     
     function resetAll() {

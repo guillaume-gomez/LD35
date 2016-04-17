@@ -3,6 +3,7 @@ const TIMER = 10000;
 const MAX_NB_BLOCS = 12;
 const MIN_Y_ORIGIN = 500; 
 const TIMER_DECREASE = 50;
+const MAX_HOLE = 10;
 
 function TileSet (viewport,cell_size )
 {   
@@ -73,9 +74,8 @@ function TileSet (viewport,cell_size )
         this.deleteCollisionBox(viewport);
         //add new one
         if (m_max_width_created < viewport.x + viewport.width) {
-            m_max_width_created = this.createFloor(m_max_width_created);
+            m_max_width_created = this.handleFloor(m_max_width_created);
         }
-        //console.log(m_timer.getInterval());
         //var randomPattern = Math.floor(Math.random() * BORNE_MAX) + 1;
         if (m_timer.getInterval() > m_timerObject) {
             var yOrigin = MIN_Y_ORIGIN;
@@ -83,6 +83,18 @@ function TileSet (viewport,cell_size )
             m_max_width_created = this.createColumn(m_max_width_created, yOrigin, nbBlocs);
             m_timerObject -= TIMER_DECREASE;
             m_timer.reset();
+        }
+    }
+
+    this.handleFloor = function (offset) {
+        var f_nb = Math.floor(Math.random() * 2) + 1;
+        switch(f_nb) {
+            case 1:
+                return this.createFloor(offset);
+            break;
+            case 2:
+                return this.createHole(offset);
+            break;
         }
     }
 
@@ -95,6 +107,22 @@ function TileSet (viewport,cell_size )
         m_tile_map.push(blocks);
 
         var b = new SAT.Box(new SAT.Vector(offset, FLOOR_Y), m_viewport.width, m_tile_map.cell_size[1]);
+        m_collision_boxes.push({polygon: b, offset: offset});
+
+        return offset + m_viewport.width;
+    }
+
+
+    this.createHole = function(offset) {
+        var blocks = new SpriteList();
+        var nbBlocsRemoved = Math.floor(Math.random() * MAX_HOLE) + 2;
+        for (var x = 0, index = 0; x <= m_viewport.width; x += m_tile_map.cell_size[0], index++) {
+            if( index > nbBlocsRemoved) {
+                blocks.push( new Sprite({image: "test.png", x: offset + x, y: FLOOR_Y}));
+            }
+        }
+        m_tile_map.push(blocks);
+        var b = new SAT.Box(new SAT.Vector(offset + nbBlocsRemoved * m_tile_map.cell_size[0], FLOOR_Y), m_viewport.width - (nbBlocsRemoved * m_tile_map.cell_size[0]), m_tile_map.cell_size[1]);
         m_collision_boxes.push({polygon: b, offset: offset});
 
         return offset + m_viewport.width;

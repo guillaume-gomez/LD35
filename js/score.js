@@ -14,6 +14,8 @@ Score.prototype.draw = function() {
 }
 
 Score.prototype.compute = function(character) {
-  this.m_score = character.getPosition().x * (character.size().height / tileHeightOrigin);
+  this.m_score += (character.size().height / tileHeightOrigin);
+  this.m_score = (this.m_score < 0) ? 0 : this.m_score;
   jaws.score = this.m_score;
+        
 }
