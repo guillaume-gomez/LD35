@@ -1,5 +1,5 @@
 //10seconds
-const TIMER = 1000;
+const TIMER = 10000;
 const MAX_NB_BLOCS = 12;
 const MIN_Y_ORIGIN = 500; 
 const TIMER_DECREASE = 50;
@@ -26,8 +26,10 @@ function TileSet (viewport,cell_size )
         m_currentLevel = 1;
         m_max_width_created = 0;
         m_collision_boxes = [];
+        
         this.createColumn(150, 510, 4);
         this.createColumn(500, 540, 2);
+        
         m_timerObject = TIMER;
         m_timer.reset();
 
@@ -98,11 +100,11 @@ function TileSet (viewport,cell_size )
         }
     }
 
-    this.createFloor = function(offset) {
+    this.createFloor = function(offset, tile, image = "floor.png") {
         var blocks = new SpriteList();
         for (var x = 0; x < m_viewport.width; x += m_tile_map.cell_size[0]) {
 
-            blocks.push( new Sprite({image: "floor.png", x: offset + x, y: FLOOR_Y}));
+            blocks.push( new Sprite({image: image, x: offset + x, y: FLOOR_Y}));
         }
         m_tile_map.push(blocks);
 
@@ -128,16 +130,20 @@ function TileSet (viewport,cell_size )
         return offset + m_viewport.width;
     }
 
-    this.createColumn = function(offset, yOrigin, nbBlocs) {
+    this.createColumn = function(offset, yOrigin, nbBlocs, image = "floor.png") {
         var blocks = new SpriteList();
         for(var nb = 1; nb <= nbBlocs ; nb++) {
-            blocks.push( new Sprite({image: "floor.png", x: offset, y: yOrigin -  nb * m_tile_map.cell_size[1]}));
+            blocks.push( new Sprite({image: image, x: offset, y: yOrigin -  nb * m_tile_map.cell_size[1]}));
         }
         m_tile_map.push(blocks);
         var b = new SAT.Box(new SAT.Vector(offset, yOrigin - nbBlocs * m_tile_map.cell_size[1]), m_tile_map.cell_size[0], nbBlocs * m_tile_map.cell_size[1]);
         m_collision_boxes.push({polygon: b, offset: offset});
 
         return offset;
+    }
+
+    this.createTriangle = function(offset, height) {
+        
     }
 
     this.getCollisionBoxes = function () {
@@ -154,15 +160,4 @@ function TileSet (viewport,cell_size )
         }
         return false;
     }
-
-
-    // this.loadLevel = function  ()
-    // {
-    
-    //    m_spriteList = new jaws.SpriteList();
-    //    m_spriteList.load(jaws.assets.get("level1.json")); 
-    //     m_tile_map = new jaws.TileMap({size : [m_viewport.max_x/cell_size+10,m_viewport.max_y/cell_size+10] ,cell_size: [cell_size,cell_size]});
-    //     m_tile_map.push(m_spriteList);
-
-    // }
 }
