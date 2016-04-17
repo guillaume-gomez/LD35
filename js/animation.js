@@ -16,8 +16,9 @@ AnimationRectangle.prototype.init = function(rectOriginal, rectFinal, duration) 
     this.timeElapsedX = 0;
     this.timeElapsedY = 0;
     this.last_tick = 0;
-    this.offsetTimeX = duration / (this.rectF.width - rectOriginal.width);
-    this.offsetTimeY = duration / (this.rectF.height - rectOriginal.height);
+    this.offsetTimeX = (this.rectF.width - rectOriginal.width) / duration;
+    this.offsetTimeY = (this.rectF.height - rectOriginal.height) / duration;
+    debugger;
 }
 
 AnimationRectangle.prototype.isFinished = function() {
@@ -36,11 +37,13 @@ AnimationRectangle.prototype.animate = function () {
     if(this.timeElapsedX > Math.abs(this.offsetTimeX) && this.rectT.width != this.rectF.width) {
         this.rectT.width = this.offsetTimeX > 0 ? this.rectT.width+1 : this.rectT.width-1;
         this.timeElapsedX = 0;
+        console.log("x --> " + this.rectT.width);
     }
 
     if(this.timeElapsedY > Math.abs(this.offsetTimeY) && this.rectT.height != this.rectF.height) {
         this.rectT.height = this.offsetTimeY >0 ? this.rectT.height+1 : this.rectT.height-1;
         this.timeElapsedY = 0;
+        console.log("y --> " + this.rectT.height);
     }
 
     this.last_tick = this.timer.getInterval();

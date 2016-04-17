@@ -19,11 +19,11 @@ function MenuState() {
           jaws.context.textAlign="center";
           jaws.context.fillText(items[i], jaws.width/ 2, jaws.height/2 + 60);
         }
-        jaws.context.fillStyle = "Black";
+        jaws.context.fillStyle = "White";
         jaws.context.font = "bold 35pt 'Arial'";
         jaws.context.fillText(instruction, jaws.width/ 2, jaws.height/2 + 120);
 
-        jaws.context.fillStyle = "Black";
+        jaws.context.fillStyle = "White";
         jaws.context.font = "bold 25pt 'Arial'";
         jaws.context.fillText(addtionalText, jaws.width/ 2, jaws.height/2 + 180)
 

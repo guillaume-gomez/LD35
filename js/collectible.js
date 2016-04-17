@@ -51,7 +51,7 @@ Collectibles.prototype.createCollectible = function(x, collectible) {
 Collectibles.prototype.manageCollectibles = function(viewport) {
     if( this.timer.getInterval() >= TIMER_COLLECTIBLES) {
         this.timer.reset();
-        collectibleId = 3//Math.floor(Math.random() * NB_COLLECTIBLE) + 1;
+        collectibleId = Math.floor(Math.random() * NB_COLLECTIBLE) + 1;
         var collectible = null;
         x = Math.floor(Math.random() * (viewport.x + viewport.width)) + viewport.x;
         y = Math.floor(Math.random() * (viewport.y + viewport.height)) + viewport.y;
@@ -93,7 +93,7 @@ Collectibles.prototype.draw = function(viewport) {
 
 BonusWidth = function (x, y, width, height) {
     Collectible.call(this, x, y, width, height);
-    this.color = "#00f000";
+    this.color = "#B326A4";
     this.type = TYPE_BONUS_HEIGHT;
     this.widthTriangle = WIDTH_TRIANGLE;
     this.heightTriangle = HEIGHT_TRIANGLE;
@@ -140,7 +140,7 @@ BonusWidth.prototype.draw = function(viewport) {
 
 BonusHeight = function (x, y, width, height) {
     Collectible.call(this, x, y, width, height);
-    this.color = "#00f0ff";
+    this.color = "#7DAB4F";
     this.type = TYPE_BONUS_WIDTH;
     this.widthTriangle = WIDTH_TRIANGLE;
     this.heightTriangle = HEIGHT_TRIANGLE;

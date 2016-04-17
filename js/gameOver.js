@@ -17,7 +17,7 @@ function GameOver() {
         jaws.context.font = "bold 50pt 'Arial'";
         jaws.context.fillText(title, jaws.width/ 2, jaws.height/2 - 100);
 
-        jaws.context.fillStyle = "Black";
+        jaws.context.fillStyle = "White";
         jaws.context.font = "bold 45pt 'Arial'";
         jaws.context.fillText(y_score + parseInt(jaws.score), jaws.width/ 2, jaws.height/2);
 
