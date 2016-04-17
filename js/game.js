@@ -1,6 +1,7 @@
 
 const FLOOR_Y = 570
 const MIN_HEIGHT = 5;
+const OFFSET_SCORE = 120;
 
 function Game ()
 {
@@ -9,6 +10,7 @@ function Game ()
     var m_level;
     var m_background;
     var cell_size;
+    var m_hud;
 
     this.setup = function () {
         live_info = document.getElementById("live_info");
@@ -26,6 +28,8 @@ function Game ()
         
         m_background = new Sound ('music.ogg','music.mp3');
         m_background.constructor();
+
+        m_hud = new Score(jaws.width - OFFSET_SCORE,20);
         
         jaws.preventDefaultKeys(["up", "down", "left", "right", "space"]);
 
@@ -52,6 +56,7 @@ function Game ()
 
         m_background.update();
         m_level.manageTiles(m_viewport);
+        m_hud.compute(m_perso);
         //Infos
         live_info.innerHTML = jaws.game_loop.fps + " fps. Player: " + parseInt(m_perso.getPosition().x) + "/" + parseInt(m_perso.getPosition().y) + ". ";
         live_info.innerHTML += "Viewport: " + parseInt(m_viewport.x) + "/" + parseInt(m_viewport.y) + ".";
@@ -60,6 +65,7 @@ function Game ()
    
     this.draw = function () {
         jaws.clear();
+        m_hud.draw();
         m_viewport.drawTileMap( m_level.getTileMap() ) ;
         if ( m_perso.isAlive() )
         {
