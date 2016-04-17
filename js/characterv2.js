@@ -1,7 +1,8 @@
 /**
 * @brief : Classe qui gere le héros 
 **/
-
+const tileOriginX = 100;
+const tileOriginY = 100; 
 
 CharacterV2 = function(image, frame_width, frame_height, frame_duration, viewport, urlSound) {
     this.m_player = new jaws.Sprite({x:150, y: 300 , anchor:"left_bottom"});
@@ -12,8 +13,8 @@ CharacterV2.prototype.init = function() {
     this.m_player.x = 150;
     this.m_player.y = 300;
 
-    this.m_player.width = 100;
-    this.m_player.height = 100;
+    this.m_player.width = tileOriginX;
+    this.m_player.height = tileOriginY;
     this.m_player.left_offset   = this.m_player.width * this.m_player.anchor_x
     this.m_player.top_offset    = this.m_player.height * this.m_player.anchor_y
     this.m_player.right_offset  = this.m_player.width * (1.0 - this.m_player.anchor_x)
@@ -151,58 +152,52 @@ CharacterV2.prototype.move = function (level)
     }
 }
     
-CharacterV2.prototype.show = function () 
-{
+CharacterV2.prototype.show = function () {
     //this.m_player.vx = this.m_speed;
 }
     
 
-CharacterV2.prototype.getPlayer = function ()
-{
+CharacterV2.prototype.getPlayer = function () {
     return this.m_player;
 }
 
-CharacterV2.prototype.draw = function() 
-{
+CharacterV2.prototype.draw = function() {
     this.m_player.draw();
 }
 
 
-CharacterV2.prototype.getX = function()
-{
+CharacterV2.prototype.getX = function() {
     return this.m_player.x;
 }
 
 
-CharacterV2.prototype.getY = function()
-{
+CharacterV2.prototype.getY = function() {
     return this.m_player.y;
 }
     
 
-CharacterV2.prototype.setX = function( _x)
-{
+CharacterV2.prototype.setX = function( _x) {
     this.m_player.x = _x;
 }
 
 
-CharacterV2.prototype.setY = function( _y)
-{
+CharacterV2.prototype.setY = function( _y) {
      this.m_player.y = _y;
 }
 
-CharacterV2.prototype.isAlive = function  ()
-{
+CharacterV2.prototype.isAlive = function  () {
     return (this.m_vie && this.m_player.y < FLOOR_Y *2 );
 }
 
 
-CharacterV2.prototype.setAlive = function ( vie )
-{
+CharacterV2.prototype.setAlive = function ( vie ) {
     this.m_vie = vie ;
 }
 
-CharacterV2.prototype.rect = function ()
-{
+CharacterV2.prototype.rect = function () {
     return this.m_player.rect();
+}
+
+CharacterV2.prototype.size = function() {
+    return {width: this.m_player.width, height: this.m_player.height};
 }
