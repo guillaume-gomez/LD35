@@ -75,7 +75,7 @@ CharacterV2.prototype.secondDraw = function(viewport) {
     ctx.lineTo(this.m_player.x + this.m_player.width - viewport.x, this.m_player.y - this.m_player.height - viewport.y);
     ctx.closePath();
     ctx.fillStyle = this.my_color;
-    ctx.strokeStyle = '#ff0000';
+    ctx.strokeStyle = '#0F0F0F';
     ctx.stroke();
     ctx.fill();
 
