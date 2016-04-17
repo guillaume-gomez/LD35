@@ -1,6 +1,7 @@
 const RANDOM_BONUS = 100;
 const CREATE_BONUS = 8;
-const TYPE_BONUS = "bonus";
+const TYPE_BONUS_HEIGHT = "bonus_height";
+const TYPE_BONUS_WIDTH = "bonus_width";
 
 
 Collectible = function(x, y, width, height) {
@@ -8,9 +9,10 @@ Collectible = function(x, y, width, height) {
     this.y = y;
     this.width = width;
     this.height = height;
+    this.color = '#00ff00';
+    this.type = "Unknown";
     //this.m_scoring = new jaws.Text({text: this.text, x: x, y: y});
 }
-
 
 Collectible.prototype.draw = function(viewport) {
     var ctx = jaws.context;
@@ -20,7 +22,7 @@ Collectible.prototype.draw = function(viewport) {
     ctx.lineTo(this.x + this.width - viewport.x, this.y - viewport.y);
     ctx.lineTo(this.x + this.width - viewport.x, this.y - this.height - viewport.y);
     ctx.closePath();
-    ctx.fillStyle = '#00ff00';
+    ctx.fillStyle = this.color;
     ctx.strokeStyle = '#ff0000';
     ctx.stroke();
     ctx.fill();
@@ -33,9 +35,9 @@ Collectibles = function() {
 
 Collectibles.prototype.createBonus = function(offset) {
     y = 500;
-    var bonusGraphics = new Collectible(offset, y, 30, 30);
+    var bonusGraphics = new BonusHeight(offset, y, 30, 30);
     var b = new SAT.Box(new SAT.Vector(offset, y), bonusGraphics.width, bonusGraphics.height);
-    this.collectibles.push({sprite: bonusGraphics, box: b, type: TYPE_BONUS});
+    this.collectibles.push({sprite: bonusGraphics, box: b, type: bonusGraphics.type});
 
     return offset;
 }
@@ -63,3 +65,27 @@ Collectibles.prototype.draw = function(viewport) {
     }
 }
 
+
+
+BonusHeight = function (x, y, width, height) {
+    Collectible.call(this, x, y, width, height);
+    this.color = "#00f000";
+    this.type = TYPE_BONUS_HEIGHT;
+
+}
+
+BonusHeight.prototype.draw = function(viewport) {
+   Collectible.prototype.draw.call(this, viewport);
+}
+
+
+BonusWidth = function (x, y, width, height) {
+    Collectible.call(this, x, y, width, height);
+    this.color = "#00f0ff";
+    this.type = TYPE_BONUS_WIDTH;
+
+}
+
+BonusWidth.prototype.draw = function(viewport) {
+   Collectible.prototype.draw.call(this, viewport);
+}

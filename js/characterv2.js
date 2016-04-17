@@ -155,8 +155,11 @@ CharacterV2.prototype.move = function (level)
 CharacterV2.prototype.checkCollectibles = function(collectibles) {
     var hitbox = new SAT.Box(new SAT.Vector(this.m_player.x, this.m_player.y - this.m_player.height), this.m_player.width, this.m_player.height);
     var result = collectibles.collidedAt(hitbox);
-    if(result == TYPE_BONUS) {
+    if(result == TYPE_BONUS_HEIGHT) {
         this.m_player.height += 25;
+    }
+    else if(result == TYPE_BONUS_WIDTH) {
+        this.m_player.width += 25;
     }
 }
 
