@@ -29,6 +29,8 @@ function TileSet (viewport,cell_size )
         
         this.createColumn(150, 510, 4);
         this.createColumn(500, 540, 2);
+
+        this.createLine(500, FLOOR_Y - 90, 300, "orange.png");
         
         m_timerObject = TIMER;
         m_timer.reset();
@@ -100,11 +102,26 @@ function TileSet (viewport,cell_size )
         }
     }
 
-    this.createFloor = function(offset, tile, image = "floor.png") {
+    this.createLine = function(offsetX, offsetY, width, tile) {
+        var blocks = new SpriteList();
+        for (var x = offsetX; x < offsetX + width; x += m_tile_map.cell_size[0]) {
+
+            blocks.push( new Sprite({image: tile, x: x, y: offsetY}));
+        }
+        m_tile_map.push(blocks);
+
+        var b = new SAT.Box(new SAT.Vector(offsetX, offsetY), width, m_tile_map.cell_size[1]);
+        m_collision_boxes.push({polygon: b, offset: offsetX});
+
+        return offsetX + width;
+    }
+
+
+    this.createFloor = function(offset, tile) {
         var blocks = new SpriteList();
         for (var x = 0; x < m_viewport.width; x += m_tile_map.cell_size[0]) {
 
-            blocks.push( new Sprite({image: image, x: offset + x, y: FLOOR_Y}));
+            blocks.push( new Sprite({image: "floor.png", x: offset + x, y: FLOOR_Y}));
         }
         m_tile_map.push(blocks);
 
