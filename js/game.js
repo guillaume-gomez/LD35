@@ -49,6 +49,7 @@ function Game ()
         if ( m_perso.isAlive() )
         {
             m_perso.update();
+            //m_perso.updateGravity();
             m_perso.move(m_level);
             m_perso.checkCollectibles(m_collectibles);
             m_viewport.centerAround(m_perso.getPlayer() );
