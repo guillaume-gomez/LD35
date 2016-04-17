@@ -151,6 +151,15 @@ CharacterV2.prototype.move = function (level)
         this.m_player.vy = 0;
     }
 }
+
+CharacterV2.prototype.checkCollectibles = function(collectibles) {
+    var hitbox = new SAT.Box(new SAT.Vector(this.m_player.x, this.m_player.y - this.m_player.height), this.m_player.width, this.m_player.height);
+    var result = collectibles.collidedAt(hitbox);
+    if(result == TYPE_BONUS) {
+        this.m_player.height += 25;
+    }
+}
+
     
 CharacterV2.prototype.show = function () {
     //this.m_player.vx = this.m_speed;

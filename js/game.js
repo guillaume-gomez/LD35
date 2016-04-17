@@ -11,6 +11,7 @@ function Game ()
     var m_background;
     var cell_size;
     var m_hud;
+    var m_collectibles;
 
     this.setup = function () {
         live_info = document.getElementById("live_info");
@@ -28,6 +29,9 @@ function Game ()
         
         m_background = new Sound ('music.ogg','music.mp3');
         m_background.constructor();
+
+        m_collectibles = new Collectibles();
+        m_collectibles.createBonus(300);
 
         m_hud = new Score(jaws.width - OFFSET_SCORE,20);
         
@@ -47,6 +51,7 @@ function Game ()
         {
             m_perso.update();
             m_perso.move(m_level);
+            m_perso.checkCollectibles(m_collectibles);
             m_viewport.centerAround(m_perso.getPlayer() );
         }
         else
@@ -66,6 +71,7 @@ function Game ()
     this.draw = function () {
         jaws.clear();
         m_hud.draw();
+        m_collectibles.draw(m_viewport);
         m_viewport.drawTileMap( m_level.getTileMap() ) ;
         if ( m_perso.isAlive() )
         {
