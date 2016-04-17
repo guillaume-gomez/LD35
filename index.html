@@ -18,9 +18,9 @@
     <script src="js/menu.js"></script>
     <script src="js/gameOver.js"></script>
   </head>
-  <body>
+  <body style="background:#1E182C;color:white">
 
-    <canvas id="gameCanvas" width="900" height="400" style="border:1px solid #000000;background:#1E182C">
+    <canvas id="gameCanvas" width="900" height="400" style="border:1px solid #000000;background:#3B2E58">
       Your browser does not support canvas tag
     </canvas>
     </br>
@@ -54,7 +54,7 @@
     {
       jaws.assets.root = "assets/";
       jaws.unpack()
-      jaws.assets.add(["hero.png","floor.png", "foo.png", "test.png", "tileFuture1_1.png", "LD.png", "rotation.png" /*"level1.json"*/])
+      jaws.assets.add(["floor.png","test.png", "tileFuture1_1.png", "LD.png", "rotation.png"])
       
 
       if(playsOGG())      { jaws.assets.add(["music.ogg"]) }

@@ -102,7 +102,7 @@ function TileSet (viewport,cell_size )
         var blocks = new SpriteList();
         for (var x = 0; x < m_viewport.width; x += m_tile_map.cell_size[0]) {
 
-            blocks.push( new Sprite({image: "test.png", x: offset + x, y: FLOOR_Y}));
+            blocks.push( new Sprite({image: "floor.png", x: offset + x, y: FLOOR_Y}));
         }
         m_tile_map.push(blocks);
 
@@ -118,7 +118,7 @@ function TileSet (viewport,cell_size )
         var nbBlocsRemoved = Math.floor(Math.random() * MAX_HOLE) + 2;
         for (var x = 0, index = 0; x <= m_viewport.width; x += m_tile_map.cell_size[0], index++) {
             if( index > nbBlocsRemoved) {
-                blocks.push( new Sprite({image: "test.png", x: offset + x, y: FLOOR_Y}));
+                blocks.push( new Sprite({image: "floor.png", x: offset + x, y: FLOOR_Y}));
             }
         }
         m_tile_map.push(blocks);
