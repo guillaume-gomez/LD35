@@ -1,10 +1,8 @@
-/**
-* @brief : Classe qui gere le niveau
-**/
-const BORNE_MAX = 100;
-const SELECT_COLUMN = 6;
+//10seconds
+const TIMER = 10000;
 const MAX_NB_BLOCS = 12;
 const MIN_Y_ORIGIN = 500; 
+const TIMER_DECREASE = 50;
 
 function TileSet (viewport,cell_size )
 {   
@@ -18,6 +16,7 @@ function TileSet (viewport,cell_size )
         m_viewport = viewport ;
         m_tile_map = new jaws.TileMap({size : [m_viewport.max_x/cell_size+10,m_viewport.max_y/cell_size+10] , cell_size: [cell_size,cell_size]});
         m_spriteList = new jaws.SpriteList();
+        m_timer = new Timer();
         this.init();
     }
 
@@ -28,6 +27,9 @@ function TileSet (viewport,cell_size )
         m_collision_boxes = [];
         this.createColumn(150, 510, 4);
         this.createColumn(500, 540, 2);
+        m_timerObject = TIMER;
+        m_timer.reset();
+
     }
 
     this.reset = function() {
@@ -73,11 +75,14 @@ function TileSet (viewport,cell_size )
         if (m_max_width_created < viewport.x + viewport.width) {
             m_max_width_created = this.createFloor(m_max_width_created);
         }
-        var random = Math.floor(Math.random() * BORNE_MAX) + 1;
-        if (random == SELECT_COLUMN) {
+        //console.log(m_timer.getInterval());
+        //var randomPattern = Math.floor(Math.random() * BORNE_MAX) + 1;
+        if (m_timer.getInterval() > m_timerObject) {
             var yOrigin = MIN_Y_ORIGIN;
             var nbBlocs = Math.floor(Math.random() * MAX_NB_BLOCS) + 1;
             m_max_width_created = this.createColumn(m_max_width_created, yOrigin, nbBlocs);
+            m_timerObject -= TIMER_DECREASE;
+            m_timer.reset();
         }
     }
 
