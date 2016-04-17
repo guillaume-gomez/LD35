@@ -1,5 +1,5 @@
 //10seconds
-const TIMER = 10000;
+const TIMER = 5000;
 const MAX_NB_BLOCS = 12;
 const MIN_Y_ORIGIN = 500; 
 const TIMER_DECREASE = 50;

@@ -187,7 +187,7 @@ CharacterV2.prototype.updateGravity = function() {
 
     
 CharacterV2.prototype.show = function () {
-    //this.m_player.vx = this.m_speed;
+    this.m_player.vx = this.m_speed;
 }
     
 
