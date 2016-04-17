@@ -68,8 +68,8 @@ Particles.prototype.draw = function(viewport, pointInterest) {
         particle.position.y = particle.shift.y + Math.sin(i + particle.angle) * (particle.orbit*particle.force);
         
         // Limit to screen bounds
-        particle.position.x = Math.max( Math.min( particle.position.x, viewport.x + viewport.width ), 0 );
-        particle.position.y = Math.max( Math.min( particle.position.y, viewport.y + viewport.height ), - viewport.height );
+        particle.position.x = Math.max( Math.min( particle.position.x, viewport.x + 2 * viewport.width ), 0 );
+        particle.position.y = Math.max( Math.min( particle.position.y, viewport.y + 2 * viewport.height ), 0 );
         
         // Slowly inherit the cloest magnets orbit
         particle.orbit += ( closestPointOfInterest.orbit - particle.orbit ) * 0.05;
