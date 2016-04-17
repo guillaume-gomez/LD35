@@ -1003,6 +1003,11 @@ jaws.Rect.prototype.resizeTo = function(width,height) {
   return this
 }
 
+/** Returns a new rect witht he same dimensions */
+jaws.Rect.prototype.clone = function() {
+  return new jaws.Rect(this.x, this.y, this.width, this.height)
+}
+
 /** Draw rect in color red, useful for debugging */
 jaws.Rect.prototype.draw = function() {
   jaws.context.strokeStyle = "red"
