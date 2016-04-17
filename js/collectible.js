@@ -2,6 +2,8 @@ const RANDOM_BONUS = 100;
 const CREATE_BONUS = 8;
 const TYPE_BONUS_HEIGHT = "bonus_height";
 const TYPE_BONUS_WIDTH = "bonus_width";
+const NB_COLLECTIBLE = 2;
+const TIMER_COLLECTIBLES = 2000;
 
 
 Collectible = function(x, y, width, height) {
@@ -30,20 +32,33 @@ Collectible.prototype.draw = function(viewport) {
 
 Collectibles = function() {
     this.collectibles = [];
+    this.timer = new Timer();
+    this.timer.start();
 }
 
 
-Collectibles.prototype.createBonus = function(offset) {
-    y = 500;
-    var bonusGraphics = new BonusHeight(offset, y, 30, 30);
-    var b = new SAT.Box(new SAT.Vector(offset, y), bonusGraphics.width, bonusGraphics.height);
-    this.collectibles.push({sprite: bonusGraphics, box: b, type: bonusGraphics.type});
-
-    return offset;
+Collectibles.prototype.createCollectible = function(x, collectible) {
+    var b = new SAT.Box(new SAT.Vector(x, y), collectible.width, collectible.height);
+    this.collectibles.push({sprite: collectible, box: b, type: collectible.type});
 }
 
-Collectibles.prototype.manageCollectibles = function() {
-
+Collectibles.prototype.manageCollectibles = function(viewport) {
+    if( this.timer.getInterval() >= TIMER_COLLECTIBLES) {
+        this.timer.reset();
+        collectibleId = Math.floor(Math.random() * NB_COLLECTIBLE) + 1;
+        var collectible = null;
+        x = viewport.x + 600;
+        y = 500;
+        switch(collectibleId) {
+            case 1:
+                collectible = new BonusHeight(x, y, 30, 30);
+            break;
+            case 2:
+                collectible = new BonusWidth(x, y, 30, 30);
+            break;
+        }
+        this.createCollectible(x, collectible);
+    }
 }
 
 Collectibles.prototype.collidedAt = function(character_hitbox) {

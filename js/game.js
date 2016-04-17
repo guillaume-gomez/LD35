@@ -31,7 +31,6 @@ function Game ()
         m_background.constructor();
 
         m_collectibles = new Collectibles();
-        m_collectibles.createBonus(300);
 
         m_hud = new Score(jaws.width - OFFSET_SCORE,20);
         
@@ -61,6 +60,7 @@ function Game ()
 
         m_background.update();
         m_level.manageTiles(m_viewport);
+        m_collectibles.manageCollectibles(m_viewport);
         m_hud.compute(m_perso);
         //Infos
         live_info.innerHTML = jaws.game_loop.fps + " fps. Player: " + parseInt(m_perso.getPosition().x) + "/" + parseInt(m_perso.getPosition().y) + ". ";
