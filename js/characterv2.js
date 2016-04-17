@@ -213,7 +213,7 @@ CharacterV2.prototype.setY = function( _y) {
 }
 
 CharacterV2.prototype.isAlive = function  () {
-    return (this.m_vie && this.m_player.y < FLOOR_Y *2 );
+    return (this.m_vie && this.m_player.y < FLOOR_Y * 2 );
 }
 
 
