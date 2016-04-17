@@ -9,7 +9,7 @@ const WIDTH_LINE = 20;
 const HEIGHT_LINE = 7;
 
 const NB_COLLECTIBLE = 2;
-const TIMER_COLLECTIBLES = 1500;//15000
+const TIMER_COLLECTIBLES = 3000;//15000
 
 
 Collectible = function(x, y, width, height) {
@@ -52,8 +52,8 @@ Collectibles.prototype.manageCollectibles = function(viewport) {
         this.timer.reset();
         collectibleId = Math.floor(Math.random() * NB_COLLECTIBLE) + 1;
         var collectible = null;
-        x = viewport.x + 600;
-        y = 500;
+        x = Math.floor(Math.random() * (viewport.x + viewport.width)) + viewport.x;
+        y = Math.floor(Math.random() * (viewport.y + viewport.height)) + viewport.y;
         switch(collectibleId) {
             case 1:
                 collectible = new BonusWidth(x, y, WIDTH_TRIANGLE * 2 + WIDTH_LINE, HEIGHT_TRIANGLE);
