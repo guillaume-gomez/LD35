@@ -4,12 +4,13 @@ const CREATE_BONUS = 8;
 const TYPE_BONUS_HEIGHT = "bonus_height";
 const TYPE_BONUS_WIDTH = "bonus_width";
 const TYPE_ROTATION = "bonus_rotation";
+const TYPE_REDUCE_WIDTH = "bonus_reduce_width";
 const WIDTH_TRIANGLE = 12;
 const HEIGHT_TRIANGLE = 12;
 const WIDTH_LINE = 20;
 const HEIGHT_LINE = 7;
 
-const NB_COLLECTIBLE = 3;
+const NB_COLLECTIBLE = 4;
 const TIMER_COLLECTIBLES = 3000;//15000
 
 
@@ -65,8 +66,21 @@ Collectibles.prototype.manageCollectibles = function(viewport) {
             case 3:
                 collectible = new BonusRotation(x, y, 30, 30);
             break;
+            case 4:
+                collectible = new BonusReduceWidth(x, y, 30, 30);
+            break;
         }
         this.createCollectible(x, collectible);
+    }
+    this.removeCollectibles(viewport);
+}
+
+Collectibles.prototype.removeCollectibles = function(viewport) {
+    for(var index = 0; index < this.collectibles.length; ++index) {
+        var collectible = this.collectibles[ index ].sprite;
+        if(viewport.x > collectible.x + collectible.width ) {
+             this.collectibles.splice( index, 1 );  
+        }
     }
 }
 
@@ -191,5 +205,17 @@ BonusRotation = function(x, y, width, height) {
 }
 
 BonusRotation.prototype.draw = function(viewport) {
+    viewport.draw(this.sprite);
+}
+
+
+
+BonusReduceWidth = function(x, y, width, height) {
+    Collectible.call(this, x, y, width, height);
+    this.type = TYPE_REDUCE_WIDTH;
+    this.sprite = new Sprite({image: "yellow.png", x: x, y: y});
+}
+
+BonusReduceWidth.prototype.draw = function(viewport) {
     viewport.draw(this.sprite);
 }

@@ -5,12 +5,12 @@ const tileWidthOrigin = 100;
 const tileHeightOrigin = 100; 
 
 CharacterV2 = function(image, frame_width, frame_height, frame_duration, viewport, urlSound) {
-    this.m_player = new jaws.Sprite({x:150, y: 300 , anchor:"left_bottom"});
+    this.m_player = new jaws.Sprite({x:0, y: 300 , anchor:"left_bottom"});
     this.init();
 }
 
 CharacterV2.prototype.init = function() {
-    this.m_player.x = 150;
+    this.m_player.x = 0;
     this.m_player.y = 300;
 
     this.m_player.width = tileWidthOrigin;
@@ -155,16 +155,23 @@ CharacterV2.prototype.move = function (level)
 CharacterV2.prototype.checkCollectibles = function(collectibles) {
     var hitbox = new SAT.Box(new SAT.Vector(this.m_player.x, this.m_player.y - this.m_player.height), this.m_player.width, this.m_player.height);
     var result = collectibles.collidedAt(hitbox);
-    if(result == TYPE_BONUS_HEIGHT) {
-        this.m_player.height += 25;
-    }
-    else if(result == TYPE_BONUS_WIDTH) {
-        this.m_player.width += 25;
-    }
-    else if(result == TYPE_ROTATION) {
-        var heightTmp = this.m_player.height;
-        this.m_player.height = this.m_player.width;
-        this.m_player.width  = heightTmp;  
+    switch(result) {
+        case TYPE_BONUS_HEIGHT:
+            this.m_player.height += 25;
+        break;
+        case TYPE_BONUS_WIDTH:
+            this.m_player.width += 25;
+        break;
+        case TYPE_ROTATION:
+            {
+                var heightTmp = this.m_player.height;
+                this.m_player.height = this.m_player.width;
+                this.m_player.width  = heightTmp; 
+            }
+        break;
+        case TYPE_REDUCE_WIDTH:
+            this.m_player.width = (this.m_player.width - 25 > 0)? this.m_player.width - 25 : MIN_WIDTH ;
+        break;
     }
 }
 

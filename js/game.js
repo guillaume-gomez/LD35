@@ -1,6 +1,7 @@
 
 const FLOOR_Y = 570
 const MIN_HEIGHT = 5;
+const MIN_WIDTH = 5;
 const OFFSET_SCORE = 80;
 const GRAVITY_ORIGIN = 0.2;
 const MIN_GRAVITY = 0.05;
