@@ -55,7 +55,8 @@ Collectibles.prototype.manageCollectibles = function(viewport) {
         collectibleId = Math.floor(Math.random() * NB_COLLECTIBLE) + 1;
         var collectible = null;
         x = Math.floor(Math.random() * (viewport.x + viewport.width)) + viewport.x;
-        y = Math.floor(Math.random() * (viewport.y + viewport.height)) + viewport.y;
+        //the taller object is the max
+        y = Math.floor(Math.random() * (viewport.y + viewport.height - HEIGHT_TRIANGLE * 2 + HEIGHT_LINE)) + viewport.y;
         switch(collectibleId) {
             case 1:
                 collectible = new BonusWidth(x, y, WIDTH_TRIANGLE * 2 + WIDTH_LINE, HEIGHT_TRIANGLE);
