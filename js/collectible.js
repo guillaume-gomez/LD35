@@ -43,7 +43,7 @@ Collectibles = function() {
 
 
 Collectibles.prototype.createCollectible = function(x, collectible) {
-    var b = new SAT.Box(new SAT.Vector(x, y), collectible.width, collectible.height);
+    var b = new SAT.Box(new SAT.Vector(x, y - collectible.height), collectible.width, collectible.height);
     this.collectibles.push({sprite: collectible, box: b, type: collectible.type});
 }
 

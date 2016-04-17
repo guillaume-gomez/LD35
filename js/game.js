@@ -71,13 +71,13 @@ function Game ()
    
     this.draw = function () {
         jaws.clear();
-        m_hud.draw();
         m_collectibles.draw(m_viewport);
         m_viewport.drawTileMap( m_level.getTileMap() ) ;
         if ( m_perso.isAlive() )
         {
             m_perso.secondDraw(m_viewport);
         }
+        m_hud.draw();
     }
     
     function resetLevel () {
