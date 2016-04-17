@@ -83,6 +83,7 @@ function Game ()
     function resetLevel () {
         m_perso.init();
         m_level.reset();
+        {jaws.switchGameState(MenuState) }
     }
     
     function resetAll() {
