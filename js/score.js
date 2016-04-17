@@ -14,5 +14,5 @@ Score.prototype.draw = function() {
 }
 
 Score.prototype.compute = function(character) {
-  this.m_score = character.getPosition().x * (character.size().height / tileOriginY);
+  this.m_score = character.getPosition().x * (character.size().height / tileHeightOrigin);
 }

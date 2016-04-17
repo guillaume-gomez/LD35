@@ -1,8 +1,8 @@
 /**
 * @brief : Classe qui gere le héros 
 **/
-const tileOriginX = 100;
-const tileOriginY = 100; 
+const tileWidthOrigin = 100;
+const tileHeightOrigin = 100; 
 
 CharacterV2 = function(image, frame_width, frame_height, frame_duration, viewport, urlSound) {
     this.m_player = new jaws.Sprite({x:150, y: 300 , anchor:"left_bottom"});
@@ -13,8 +13,8 @@ CharacterV2.prototype.init = function() {
     this.m_player.x = 150;
     this.m_player.y = 300;
 
-    this.m_player.width = tileOriginX;
-    this.m_player.height = tileOriginY;
+    this.m_player.width = tileWidthOrigin;
+    this.m_player.height = tileHeightOrigin;
     this.m_player.left_offset   = this.m_player.width * this.m_player.anchor_x
     this.m_player.top_offset    = this.m_player.height * this.m_player.anchor_y
     this.m_player.right_offset  = this.m_player.width * (1.0 - this.m_player.anchor_x)
@@ -161,6 +161,16 @@ CharacterV2.prototype.checkCollectibles = function(collectibles) {
     else if(result == TYPE_BONUS_WIDTH) {
         this.m_player.width += 25;
     }
+}
+
+CharacterV2.prototype.updateGravity = function() {
+    var gravity = 0.4
+    const gravityRatio = 0.1;
+    var ratioX = this.m_player.width / tileWidthOrigin;
+    var ratioY = this.m_player.height / tileHeightOrigin;
+    //TODO use RATIOY too
+    var newGravity = gravity + (ratioX - 1.0) * gravityRatio;
+    return newGravity;
 }
 
     
