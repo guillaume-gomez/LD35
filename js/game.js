@@ -1,7 +1,7 @@
 
 const FLOOR_Y = 570
 const MIN_HEIGHT = 5;
-const OFFSET_SCORE = 120;
+const OFFSET_SCORE = 80;
 
 function Game ()
 {
