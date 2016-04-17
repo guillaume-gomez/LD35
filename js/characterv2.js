@@ -161,15 +161,20 @@ CharacterV2.prototype.checkCollectibles = function(collectibles) {
     else if(result == TYPE_BONUS_WIDTH) {
         this.m_player.width += 25;
     }
+    else if(result == TYPE_ROTATION) {
+        var heightTmp = this.m_player.height;
+        this.m_player.height = this.m_player.width;
+        this.m_player.width  = heightTmp;  
+    }
 }
 
 CharacterV2.prototype.updateGravity = function() {
-    var gravity = 0.4
+    var gravity = GRAVITY_ORIGIN;
     const gravityRatio = 0.1;
     var ratioX = this.m_player.width / tileWidthOrigin;
     var ratioY = this.m_player.height / tileHeightOrigin;
-    //TODO use RATIOY too
-    var newGravity = gravity + (ratioX - 1.0) * gravityRatio;
+    var newGravity = gravity + ((ratioX - 1.0) + (ratioY - 1.0)) * gravityRatio  ;
+    newGravity = (newGravity < MIN_GRAVITY) ? MIN_GRAVITY : newGravity;
     return newGravity;
 }
 

@@ -3,12 +3,13 @@ const CREATE_BONUS = 8;
 
 const TYPE_BONUS_HEIGHT = "bonus_height";
 const TYPE_BONUS_WIDTH = "bonus_width";
+const TYPE_ROTATION = "bonus_rotation";
 const WIDTH_TRIANGLE = 12;
 const HEIGHT_TRIANGLE = 12;
 const WIDTH_LINE = 20;
 const HEIGHT_LINE = 7;
 
-const NB_COLLECTIBLE = 2;
+const NB_COLLECTIBLE = 3;
 const TIMER_COLLECTIBLES = 3000;//15000
 
 
@@ -50,7 +51,7 @@ Collectibles.prototype.createCollectible = function(x, collectible) {
 Collectibles.prototype.manageCollectibles = function(viewport) {
     if( this.timer.getInterval() >= TIMER_COLLECTIBLES) {
         this.timer.reset();
-        collectibleId = Math.floor(Math.random() * NB_COLLECTIBLE) + 1;
+        collectibleId = 3//Math.floor(Math.random() * NB_COLLECTIBLE) + 1;
         var collectible = null;
         x = Math.floor(Math.random() * (viewport.x + viewport.width)) + viewport.x;
         y = Math.floor(Math.random() * (viewport.y + viewport.height)) + viewport.y;
@@ -60,6 +61,9 @@ Collectibles.prototype.manageCollectibles = function(viewport) {
             break;
             case 2:
                 collectible = new BonusHeight(x, y, WIDTH_TRIANGLE, HEIGHT_TRIANGLE * 2 + HEIGHT_LINE);
+            break;
+            case 3:
+                collectible = new BonusRotation(x, y, 30, 30);
             break;
         }
         this.createCollectible(x, collectible);
@@ -178,4 +182,14 @@ BonusHeight.prototype.draw = function(viewport) {
     ctx.fillStyle = this.color;
     ctx.fill();
 
+}
+
+BonusRotation = function(x, y, width, height) {
+    Collectible.call(this, x, y, width, height);
+    this.type = TYPE_ROTATION;
+    this.sprite = new Sprite({image: "rotation.png", x: x, y: y});
+}
+
+BonusRotation.prototype.draw = function(viewport) {
+    viewport.draw(this.sprite);
 }

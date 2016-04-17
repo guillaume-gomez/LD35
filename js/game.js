@@ -2,6 +2,8 @@
 const FLOOR_Y = 570
 const MIN_HEIGHT = 5;
 const OFFSET_SCORE = 80;
+const GRAVITY_ORIGIN = 0.2;
+const MIN_GRAVITY = 0.05;
 
 function Game ()
 {
@@ -16,7 +18,7 @@ function Game ()
     this.setup = function () {
         live_info = document.getElementById("live_info");
         cell_size = 30;
-        gravity = 0.4;
+        gravity = GRAVITY_ORIGIN;
         
         //Viewport
         m_viewport = new jaws.Viewport({max_x: jaws.width*60, max_y: jaws.height*1.5});
@@ -49,7 +51,7 @@ function Game ()
         if ( m_perso.isAlive() )
         {
             m_perso.update();
-            //m_perso.updateGravity();
+            gravity = m_perso.updateGravity();
             m_perso.move(m_level);
             m_perso.checkCollectibles(m_collectibles);
             m_viewport.centerAround(m_perso.getPlayer() );
