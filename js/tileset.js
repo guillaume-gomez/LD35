@@ -4,6 +4,7 @@ const MAX_NB_BLOCS = 12;
 const MIN_Y_ORIGIN = 500; 
 const TIMER_DECREASE = 50;
 const MAX_HOLE = 10;
+const MAX_ELEMENT = 2;
 
 function TileSet (viewport,cell_size )
 {   
@@ -30,8 +31,7 @@ function TileSet (viewport,cell_size )
         this.createColumn(150, 510, 4);
         this.createColumn(500, 540, 2);
 
-        this.createLine(500, FLOOR_Y - 90, 300, "orange.png");
-        
+        this.createPyramide(500, 1);
         m_timerObject = TIMER;
         m_timer.reset();
 
@@ -83,8 +83,18 @@ function TileSet (viewport,cell_size )
         //var randomPattern = Math.floor(Math.random() * BORNE_MAX) + 1;
         if (m_timer.getInterval() > m_timerObject) {
             var yOrigin = MIN_Y_ORIGIN;
-            var nbBlocs = Math.floor(Math.random() * MAX_NB_BLOCS) + 1;
-            m_max_width_created = this.createColumn(m_max_width_created, yOrigin, nbBlocs);
+            var object = Math.floor(Math.random() * MAX_ELEMENT) + 1;
+            switch(object) {
+                case 1:
+                    {
+                        var nbBlocs = Math.floor(Math.random() * MAX_NB_BLOCS) + 1;
+                        this.createColumn(m_max_width_created, yOrigin, nbBlocs);
+                    }
+                break;
+                case 2:
+                    this.createPyramide(m_max_width_created);
+                break;
+            }
             m_timerObject -= TIMER_DECREASE;
             m_timer.reset();
         }
@@ -114,6 +124,27 @@ function TileSet (viewport,cell_size )
         m_collision_boxes.push({polygon: b, offset: offsetX});
 
         return offsetX + width;
+    }
+
+    //if direction = 0
+    // *  
+    // * *
+    // * * *
+    // else = 1
+    //     *
+    //   * *
+    // * * *
+    //////////////
+    this.createTriangle = function (offsetX, offsetY, width, height, tile,heightStep = 1,  direction = 1) {
+        for(var y = offsetY, x = 1; y >= (offsetY - height); y -= m_tile_map.cell_size[1], ++x) {
+            this.createLine(
+                offsetX + direction * heightStep *(x * m_tile_map.cell_size[0]),
+                y,
+                width - (x * m_tile_map.cell_size[0]) * heightStep,
+                tile
+            );
+        }
+        return offsetX + width - m_tile_map.cell_size[0];
     }
 
 
@@ -159,8 +190,16 @@ function TileSet (viewport,cell_size )
         return offset;
     }
 
-    this.createTriangle = function(offset, height) {
+    this.createPyramide = function(offsetX, heightStep = 1) {
+        const min_width = 120;
+        const min_height = 30;
+        var width = Math.floor(Math.random() * 3 * min_width) + min_width;
+        var height = Math.floor(Math.random() * 6 * min_height) + min_height;
         
+        var pos = this.createTriangle(offsetX, FLOOR_Y - 30, width, height, "red.png", heightStep, 1);
+        this.createTriangle(pos, FLOOR_Y - 30, width, height, "red.png", heightStep, 0);
+        
+        return offsetX + width * 2;
     }
 
     this.getCollisionBoxes = function () {
