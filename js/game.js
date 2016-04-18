@@ -89,7 +89,7 @@ function Game ()
     }
     
     this.resetLevel = function() {
-        this.setup();
+        //this.setup();
         {jaws.switchGameState(GameOver) }
     }
     

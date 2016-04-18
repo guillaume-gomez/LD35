@@ -5,16 +5,16 @@ const tileWidthOrigin = 100;
 const tileHeightOrigin = 100; 
 
 CharacterV2 = function(image, frame_width, frame_height, frame_duration, viewport, urlSound) {
-    this.m_player = new jaws.Sprite({x:0, y: 300 , anchor:"left_bottom"});
+    this.m_player = new jaws.Sprite({x:0, y: FLOOR_Y, anchor:"left_bottom"});
     this.init();
 }
 
 CharacterV2.prototype.init = function() {
-    this.m_player.x = 0;
-    this.m_player.y = 300;
-
     this.m_player.width = tileWidthOrigin;
     this.m_player.height = tileHeightOrigin;
+    this.m_player.x = 0;
+    this.m_player.y = FLOOR_Y;
+
     this.m_player.left_offset   = this.m_player.width * this.m_player.anchor_x
     this.m_player.top_offset    = this.m_player.height * this.m_player.anchor_y
     this.m_player.right_offset  = this.m_player.width * (1.0 - this.m_player.anchor_x)

@@ -27,11 +27,8 @@ function TileSet (viewport,cell_size )
         m_currentLevel = 1;
         m_max_width_created = 0;
         m_collision_boxes = [];
-        
-        this.createColumn(150, 510, 4);
-        this.createColumn(500, 540, 2);
 
-        this.createPyramide(500, 1);
+        m_max_width_created = this.createFloor(0);
         m_timerObject = TIMER;
         m_timer.reset();
 
