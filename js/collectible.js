@@ -44,20 +44,9 @@ Collectibles = function() {
 }
 
 
-Collectibles.prototype.createCollectible = function(x, collectible) {
-    var b = new SAT.Box(new SAT.Vector(x, y - collectible.height), collectible.width, collectible.height);
-    this.collectibles.push({sprite: collectible, box: b, type: collectible.type});
-}
-
-Collectibles.prototype.manageCollectibles = function(viewport) {
-    if( this.timer.getInterval() >= TIMER_COLLECTIBLES) {
-        this.timer.reset();
-        collectibleId = Math.floor(Math.random() * NB_COLLECTIBLE) + 1;
-        var collectible = null;
-        x = Math.floor(Math.random() * (viewport.x + viewport.width)) + viewport.x;
-        //the taller object is the max
-        y = Math.floor(Math.random() * (viewport.y + viewport.height - HEIGHT_TRIANGLE * 2 + HEIGHT_LINE)) + viewport.y;
-        switch(collectibleId) {
+Collectibles.prototype.createCollectible = function(x, collectibleId) {
+    var collectible = null;
+    switch(collectibleId) {
             case 1:
                 collectible = new BonusWidth(x, y, WIDTH_TRIANGLE * 2 + WIDTH_LINE, HEIGHT_TRIANGLE);
             break;
@@ -70,8 +59,19 @@ Collectibles.prototype.manageCollectibles = function(viewport) {
             case 4:
                 collectible = new BonusReduceWidth(x, y, 30, 30);
             break;
-        }
-        this.createCollectible(x, collectible);
+    }
+    var b = new SAT.Box(new SAT.Vector(x, y - collectible.height), collectible.width, collectible.height);
+    this.collectibles.push({sprite: collectible, box: b, type: collectible.type});
+}
+
+Collectibles.prototype.manageCollectibles = function(viewport) {
+    if( this.timer.getInterval() >= TIMER_COLLECTIBLES) {
+        this.timer.reset();
+        collectibleId = Math.floor(Math.random() * NB_COLLECTIBLE) + 1;
+        x = Math.floor(Math.random() * (viewport.x + viewport.width)) + viewport.x;
+        //the taller object is the max
+        y = Math.floor(Math.random() * (viewport.y + viewport.height - HEIGHT_TRIANGLE * 2 + HEIGHT_LINE)) + viewport.y; 
+        this.createCollectible(x, collectibleId);
     }
     this.removeCollectibles(viewport);
 }
