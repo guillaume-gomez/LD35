@@ -6,7 +6,7 @@
 
 ## Theme  : ShapeShift
 
-## Technology
+## Technologies
 - Javascript
 - [Jaws js](http://jawsjs.com/)
 
