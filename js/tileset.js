@@ -1,10 +1,10 @@
 //10seconds
 const TIMER = 2500;
-const MAX_NB_BLOCS = 12;
-const MIN_Y_ORIGIN = 500; 
+const MAX_NB_BLOCS = 9;
+const MIN_Y_ORIGIN = 430; 
 const TIMER_DECREASE = 50;
 const MAX_HOLE = 10;
-const MAX_ELEMENT = 2;
+const MAX_ELEMENT = 5;
 
 function TileSet (viewport,cell_size )
 {   
@@ -27,9 +27,6 @@ function TileSet (viewport,cell_size )
         m_currentLevel = 1;
         m_max_width_created = 0;
         m_collision_boxes = [];
-
-        this.createInversedL(200, 400, 5);
-
         m_max_width_created = this.createFloor(0);
         m_timerObject = TIMER;
         m_timer.reset();
@@ -84,15 +81,24 @@ function TileSet (viewport,cell_size )
         if (m_timer.getInterval() > m_timerObject) {
             var yOrigin = MIN_Y_ORIGIN;
             var object = Math.floor(Math.random() * MAX_ELEMENT) + 1;
+            var nbBlocs = Math.floor(Math.random() * MAX_NB_BLOCS) + 1;
             switch(object) {
                 case 1:
                     {
-                        var nbBlocs = Math.floor(Math.random() * MAX_NB_BLOCS) + 1;
                         m_max_width_created = this.createColumn(m_max_width_created, yOrigin, nbBlocs);
                     }
                 break;
                 case 2:
                     m_max_width_created = this.createPyramide(m_max_width_created);
+                break;
+                case 3:
+                    m_max_width_created = this.createL(m_max_width_created, yOrigin, nbBlocs);
+                break;
+                case 4:
+                    m_max_width_created = this.createInversedL(m_max_width_created, yOrigin, nbBlocs )
+                break;
+                case 5:
+                    m_max_width_created = this.createSquare(m_max_width_created, yOrigin, nbBlocs )
                 break;
             }
             m_timerObject -= TIMER_DECREASE;
@@ -156,6 +162,17 @@ function TileSet (viewport,cell_size )
         return offset + m_viewport.width;
     }
 
+    this.createSquare = function(offset, offsetY, nbBlocs) {
+        var tileUrl = "green.png";
+        //i assume cell_size.x == cell_size.y
+        var width = (nbBlocs * m_tile_map.cell_size[0]);
+        for(var y = offsetY; y > offsetY - width; y -= m_tile_map.cell_size[1]) {
+            this.createLine(offset, y, width, tileUrl);
+        } 
+        return offset + width;
+    }
+
+
 
     this.createHole = function(offset) {
         var nbBlocsRemoved = Math.floor(Math.random() * MAX_HOLE) + 2;
@@ -200,7 +217,7 @@ function TileSet (viewport,cell_size )
         
         var newOffset = this.createLine(offset, yOrigin - m_tile_map.cell_size[1], width, tileUrl);
         this.createColumn(offset, yOrigin, nbBlocs, tileUrl);
-        return newOffset + offset;
+        return newOffset;
     }
 
     this.createInversedL = function(offset, yOrigin, nbBlocs) {
@@ -208,9 +225,9 @@ function TileSet (viewport,cell_size )
         var min_width = m_tile_map.cell_size[0] * 2;
         var width =  Math.floor(Math.random() * 3 * min_width) + min_width;
         
-        var newOffset = this.createLine(offset, yOrigin - (nbBlocs+1) * m_tile_map.cell_size[1], width, tileUrl);
+        this.createLine(offset, yOrigin - (nbBlocs+1) * m_tile_map.cell_size[1], width, tileUrl);
         this.createColumn(offset, yOrigin, nbBlocs, tileUrl);
-        return newOffset + offset;
+        return offset + m_tile_map.cell_size[0];
     }
 
     this.getCollisionBoxes = function () {
