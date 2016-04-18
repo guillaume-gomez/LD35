@@ -23,7 +23,7 @@ CharacterV2.prototype.init = function() {
     this.m_player.vy = 0;
     this.m_player.can_jump = true;
    
-    this.m_speed = 2;
+    this.m_speed = 4;
     this.m_jumpHeight = 8;
     this.m_vie = true;
     this.m_sens = 1;
