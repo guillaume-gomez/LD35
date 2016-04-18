@@ -67,15 +67,17 @@ function Game ()
         m_collectibles.manageCollectibles(m_viewport);
         m_hud.compute(m_perso);
         //Infos
-        live_info.innerHTML = jaws.game_loop.fps + " fps. Player: " + parseInt(m_perso.getPosition().x) + "/" + parseInt(m_perso.getPosition().y) + ". ";
-        live_info.innerHTML += "Viewport: " + parseInt(m_viewport.x) + "/" + parseInt(m_viewport.y) + ".";
+        live_info.innerHTML = jaws.game_loop.fps + " fps. Player: " + parseInt(m_perso.getPosition().x) + "/" + parseInt(m_perso.getPosition().y);
+        live_info.innerHTML += " Viewport: " + parseInt(m_viewport.x) + "/" + parseInt(m_viewport.y);
+        live_info.innerHTML += " SpriteVisible: " + parseInt(m_level.getSpriteList().length)
     }
     
    
     this.draw = function () {
         jaws.clear();
         m_collectibles.draw(m_viewport);
-        m_viewport.drawTileMap( m_level.getTileMap() ) ;
+        // m_viewport.drawTileMap( m_level.getTileMap() ) ;
+        m_viewport.draw(m_level.getSpriteList());
         if ( m_perso.isAlive() )
         {
             m_perso.secondDraw(m_viewport);
