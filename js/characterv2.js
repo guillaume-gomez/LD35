@@ -40,19 +40,19 @@ CharacterV2.prototype.init = function() {
 
 CharacterV2.prototype.update = function () {
     this.show();
-    //Si touche gauche enfoncé
-    if (jaws.pressed("left") || jaws.pressed("q"))
-    { 
-        this.m_player.vx -= this.m_speed ; 
-        this.m_goLeft = true;
-        this.m_sens = -1;
-    }
-    //Si touche doite enfoncé
-    else if (jaws.pressed("right") || jaws.pressed("d"))
-    { 
-        this.m_player.vx += this.m_speed;
-        this.m_sens = 1 ;
-    }    
+    // //Si touche gauche enfoncé
+    // if (jaws.pressed("left") || jaws.pressed("q"))
+    // { 
+    //     this.m_player.vx -= this.m_speed ; 
+    //     this.m_goLeft = true;
+    //     this.m_sens = -1;
+    // }
+    // //Si touche doite enfoncé
+    // else if (jaws.pressed("right") || jaws.pressed("d"))
+    // { 
+    //     this.m_player.vx += this.m_speed;
+    //     this.m_sens = 1 ;
+    // }    
     
     //Si touche haut enfoncé
      if (jaws.pressed("up") || jaws.pressed("space"))
