@@ -28,6 +28,8 @@ function TileSet (viewport,cell_size )
         m_max_width_created = 0;
         m_collision_boxes = [];
 
+        this.createInversedL(200, 400, 5);
+
         m_max_width_created = this.createFloor(0);
         m_timerObject = TIMER;
         m_timer.reset();
@@ -86,11 +88,11 @@ function TileSet (viewport,cell_size )
                 case 1:
                     {
                         var nbBlocs = Math.floor(Math.random() * MAX_NB_BLOCS) + 1;
-                        this.createColumn(m_max_width_created, yOrigin, nbBlocs);
+                        m_max_width_created = this.createColumn(m_max_width_created, yOrigin, nbBlocs);
                     }
                 break;
                 case 2:
-                    this.createPyramide(m_max_width_created);
+                    m_max_width_created = this.createPyramide(m_max_width_created);
                 break;
             }
             m_timerObject -= TIMER_DECREASE;
@@ -176,19 +178,39 @@ function TileSet (viewport,cell_size )
         var b = new SAT.Box(new SAT.Vector(offset, yOrigin - nbBlocs * m_tile_map.cell_size[1]), m_tile_map.cell_size[0], nbBlocs * m_tile_map.cell_size[1]);
         m_collision_boxes.push({polygon: b, offset: offset});
 
-        return offset;
+        return offset + m_tile_map.cell_size[0];
     }
 
     this.createPyramide = function(offsetX, heightStep = 1) {
-        const min_width = 120;
-        const min_height = 30;
+        const min_width = m_tile_map.cell_size[0] * 4;
+        const min_height = m_tile_map.cell_size[1];
         var width = Math.floor(Math.random() * 3 * min_width) + min_width;
         var height = Math.floor(Math.random() * 6 * min_height) + min_height;
         
-        var pos = this.createTriangle(offsetX, FLOOR_Y - 30, width, height, "red.png", heightStep, 1);
-        this.createTriangle(pos, FLOOR_Y - 30, width, height, "red.png", heightStep, 0);
+        var pos = this.createTriangle(offsetX, FLOOR_Y, width, height, "red.png", heightStep, 1);
+        this.createTriangle(pos, FLOOR_Y, width, height, "red.png", heightStep, 0);
         
         return offsetX + width * 2;
+    }
+
+    this.createL = function(offset, yOrigin, nbBlocs) {
+        var tileUrl = "orange.png";
+        var min_width = m_tile_map.cell_size[0] * 2;
+        var width =  Math.floor(Math.random() * 3 * min_width) + min_width;
+        
+        var newOffset = this.createLine(offset, yOrigin - m_tile_map.cell_size[1], width, tileUrl);
+        this.createColumn(offset, yOrigin, nbBlocs, tileUrl);
+        return newOffset + offset;
+    }
+
+    this.createInversedL = function(offset, yOrigin, nbBlocs) {
+        var tileUrl = "blue.png";
+        var min_width = m_tile_map.cell_size[0] * 2;
+        var width =  Math.floor(Math.random() * 3 * min_width) + min_width;
+        
+        var newOffset = this.createLine(offset, yOrigin - (nbBlocs+1) * m_tile_map.cell_size[1], width, tileUrl);
+        this.createColumn(offset, yOrigin, nbBlocs, tileUrl);
+        return newOffset + offset;
     }
 
     this.getCollisionBoxes = function () {
