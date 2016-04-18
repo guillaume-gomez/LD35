@@ -16,9 +16,7 @@ function Game ()
     var m_hud;
     var m_collectibles;
 
-    this.setup = function () {
-        live_info = document.getElementById("live_info");
-        cell_size = 30;
+    this.init = function() {
         gravity = GRAVITY_ORIGIN;
         
         //Viewport
@@ -28,8 +26,13 @@ function Game ()
         
         m_level = new TileSet(m_viewport, cell_size );
         m_level.constructor();
-        
-        
+    }
+
+    this.setup = function () {
+        live_info = document.getElementById("live_info");
+        cell_size = 30;
+        this.init();
+
         m_background = new Sound ('music.ogg','music.mp3');
         m_background.constructor();
 
@@ -59,7 +62,7 @@ function Game ()
         }
         else
         {
-            resetLevel();
+            this.resetLevel();
         }
 
         m_background.update();
@@ -85,10 +88,9 @@ function Game ()
         m_hud.draw();
     }
     
-    function resetLevel () {
+    this.resetLevel = function() {
+        this.setup();
         {jaws.switchGameState(GameOver) }
-        //m_perso.init();
-        //m_level.reset();
     }
     
     function resetAll() {
