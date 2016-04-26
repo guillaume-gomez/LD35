@@ -1,10 +1,10 @@
 //10seconds
-const TIMER = 2500;
-const MAX_NB_BLOCS = 9;
-const MIN_Y_ORIGIN = 430; 
+const TIMER = 2700;
+const MAX_NB_BLOCS = 7;
+const MIN_Y_ORIGIN = 400; 
 const TIMER_DECREASE = 50;
-const MAX_HOLE = 10;
-const MAX_ELEMENT = 5;
+const MAX_HOLE = 8;
+const MAX_ELEMENT = 4;
 
 function TileSet (viewport,cell_size )
 {   
@@ -13,6 +13,7 @@ function TileSet (viewport,cell_size )
     var m_max_width_created;
     var m_collision_boxes;
     var m_timer;
+    var m_last_object_created;
 
     this.constructor  = function () {
         m_viewport = viewport ;
@@ -84,20 +85,15 @@ function TileSet (viewport,cell_size )
             var nbBlocs = Math.floor(Math.random() * MAX_NB_BLOCS) + 1;
             switch(object) {
                 case 1:
-                    {
-                        m_max_width_created = this.createColumn(m_max_width_created, yOrigin, nbBlocs);
-                    }
+                    m_max_width_created = this.createColumn(m_max_width_created, yOrigin, nbBlocs);
                 break;
                 case 2:
-                    m_max_width_created = this.createPyramide(m_max_width_created);
-                break;
-                case 3:
                     m_max_width_created = this.createL(m_max_width_created, yOrigin, nbBlocs);
                 break;
-                case 4:
+                case 3:
                     m_max_width_created = this.createInversedL(m_max_width_created, yOrigin, nbBlocs )
                 break;
-                case 5:
+                case 4:
                     m_max_width_created = this.createSquare(m_max_width_created, yOrigin, nbBlocs )
                 break;
             }
@@ -107,13 +103,16 @@ function TileSet (viewport,cell_size )
     }
 
     this.handleFloor = function (offset) {
-        var f_nb = Math.floor(Math.random() * 2) + 1;
+        var f_nb = Math.floor(Math.random() * 3) + 1;
         switch(f_nb) {
             case 1:
                 return this.createFloor(offset);
             break;
             case 2:
                 return this.createHole(offset);
+            break;
+            case 3:
+                return this.createPyramide(offset);
             break;
         }
     }
