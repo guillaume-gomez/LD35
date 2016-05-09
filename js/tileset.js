@@ -28,7 +28,9 @@ function TileSet (viewport,cell_size )
         m_currentLevel = 1;
         m_max_width_created = 0;
         m_collision_boxes = [];
-        m_max_width_created = this.createFloor(0);
+        //m_max_width_created = this.createFloor(0);
+
+        m_max_width_created = this.createHole(0);
         m_timerObject = TIMER;
         m_timer.reset();
 
@@ -161,6 +163,17 @@ function TileSet (viewport,cell_size )
         return offset + m_viewport.width;
     }
 
+    this.createFloor2 = function(offset, tile) {
+        for (var x = 0; x < m_viewport.width; x += m_tile_map.cell_size[0]) {
+            m_spriteList.push(new Sprite({image: "floor.png", x: offset + x, y: FLOOR_Y-100}));
+        }
+
+        var b = new SAT.Box(new SAT.Vector(offset, FLOOR_Y - 100), m_viewport.width, m_tile_map.cell_size[1]);
+        m_collision_boxes.push({polygon: b, offset: offset});
+
+        return offset + m_viewport.width;
+    }
+
     this.createSquare = function(offset, offsetY, nbBlocs) {
         var tileUrl = "green.png";
         //i assume cell_size.x == cell_size.y
@@ -175,15 +188,7 @@ function TileSet (viewport,cell_size )
 
     this.createHole = function(offset) {
         var nbBlocsRemoved = Math.floor(Math.random() * MAX_HOLE) + 2;
-        for (var x = 0, index = 0; x <= m_viewport.width; x += m_tile_map.cell_size[0], index++) {
-            if( index > nbBlocsRemoved) {
-                m_spriteList.push( new Sprite({image: "floor.png", x: offset + x, y: FLOOR_Y}));
-            }
-        }
-
-        var b = new SAT.Box(new SAT.Vector(offset + nbBlocsRemoved * m_tile_map.cell_size[0], FLOOR_Y), m_viewport.width - (nbBlocsRemoved * m_tile_map.cell_size[0]), m_tile_map.cell_size[1]);
-        m_collision_boxes.push({polygon: b, offset: offset});
-
+        this.createLine(offset, FLOOR_Y, m_viewport.width - (nbBlocsRemoved * m_tile_map.cell_size[0]), "floor.png");
         return offset + m_viewport.width;
     }
 
