@@ -1,3 +1,6 @@
+//from characterv2
+//const Speed = 4;
+
 Score = function(x, y) {
   this.x = x;
   this.y = y;
@@ -14,8 +17,8 @@ Score.prototype.draw = function() {
 }
 
 Score.prototype.compute = function(character) {
-  this.m_score += (character.size().height / tileHeightOrigin);
+  console.log(character.getVxForScore() / Speed);
+  this.m_score += (character.size().height / tileHeightOrigin) * character.getVxForScore() / Speed;
   this.m_score = (this.m_score < 0) ? 0 : this.m_score;
   jaws.score = this.m_score;
-        
 }

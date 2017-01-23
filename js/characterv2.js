@@ -2,19 +2,20 @@
 * @brief : Classe qui gere le héros 
 **/
 const tileWidthOrigin = 100;
-const tileHeightOrigin = 100; 
+const tileHeightOrigin = 100;
+const Speed = 4;
 
 CharacterV2 = function(image, frame_width, frame_height, frame_duration, viewport, urlSound) {
-    this.m_player = new jaws.Sprite({x:0, y: FLOOR_Y, anchor:"left_bottom"});
+    this.m_player = new jaws.Sprite({x:0, y: 300 , anchor:"left_bottom"});
     this.init();
 }
 
 CharacterV2.prototype.init = function() {
+    this.m_player.x = 0;
+    this.m_player.y = 300;
+
     this.m_player.width = tileWidthOrigin;
     this.m_player.height = tileHeightOrigin;
-    this.m_player.x = 0;
-    this.m_player.y = FLOOR_Y;
-
     this.m_player.left_offset   = this.m_player.width * this.m_player.anchor_x
     this.m_player.top_offset    = this.m_player.height * this.m_player.anchor_y
     this.m_player.right_offset  = this.m_player.width * (1.0 - this.m_player.anchor_x)
@@ -22,13 +23,13 @@ CharacterV2.prototype.init = function() {
     this.m_player.vx = 2;
     this.m_player.vy = 0;
     this.m_player.can_jump = true;
-   
-    this.m_speed = 4;
+    this.m_speed = Speed;
     this.m_jumpHeight = 8;
     this.m_vie = true;
     this.m_sens = 1;
     this.m_locked = false;
     this.my_color = "#F3E686";
+    this.vxForScrore = this.m_player.vx;
 
     this.m_particles = new Particles(
         {
@@ -40,19 +41,19 @@ CharacterV2.prototype.init = function() {
 
 CharacterV2.prototype.update = function () {
     this.show();
-    // //Si touche gauche enfoncé
-    // if (jaws.pressed("left") || jaws.pressed("q"))
-    // { 
-    //     this.m_player.vx -= this.m_speed ; 
-    //     this.m_goLeft = true;
-    //     this.m_sens = -1;
-    // }
-    // //Si touche doite enfoncé
-    // else if (jaws.pressed("right") || jaws.pressed("d"))
-    // { 
-    //     this.m_player.vx += this.m_speed;
-    //     this.m_sens = 1 ;
-    // }    
+    //Si touche gauche enfoncé
+    /*if (jaws.pressed("left") || jaws.pressed("q"))
+    { 
+        this.m_player.vx -= this.m_speed ; 
+        this.m_goLeft = true;
+        this.m_sens = -1;
+    }*/
+    //Si touche doite enfoncé
+    if (jaws.pressed("right") || jaws.pressed("d"))
+    { 
+        this.m_player.vx += this.m_speed;
+        this.m_sens = 1 ;
+    }    
     
     //Si touche haut enfoncé
      if (jaws.pressed("up") || jaws.pressed("space"))
@@ -114,13 +115,11 @@ CharacterV2.prototype.hurt = function(response) {
 CharacterV2.prototype.getPosition = function () {
     return { "x": this.m_player.x, "y": this.m_player.y }
 }
-     
 CharacterV2.prototype.move = function (level)
 {
     // Gravity
     this.m_locked = false ;
     this.m_player.vy += gravity;
-    
     this.m_player.move( this.m_player.vx , 0 );
     var hitbox_vx = new SAT.Box(new SAT.Vector(this.m_player.x, this.m_player.y - this.m_player.height), this.m_player.width, this.m_player.height);
     var response = level.collidedAt(hitbox_vx);
@@ -131,23 +130,23 @@ CharacterV2.prototype.move = function (level)
         this.m_locked = true ;
         this.m_player.move( - this.m_player.vx , 0 );
     }
+    this.vxForScrore = this.m_player.vx;
     this.m_player.vx = 0;
-    
     this.m_player.move( 0 , this.m_player.vy );
     //Collision objets
     var hitbox_vy = new SAT.Box(new SAT.Vector(this.m_player.x, this.m_player.y - this.m_player.height), this.m_player.width, this.m_player.height);
     var response = level.collidedAt(hitbox_vy);
-    if(response) 
-    { 
+    if(response)
+    {
         if(this.m_player.vy > 0 )//Falling
-        {    
+        {
             this.m_player.move(0 ,- response.overlapV.y - 0.001 );
             this.m_player.can_jump = true ;
         }//Jump
-        else if(this.m_player.vy < 0) 
+        else if(this.m_player.vy < 0)
         {
             this.m_player.move(0 , + response.overlapV.y + this.m_player.height);
-        }    
+        }
         this.m_player.vy = 0;
     }
 }
@@ -185,11 +184,10 @@ CharacterV2.prototype.updateGravity = function() {
     return newGravity;
 }
 
-    
+
 CharacterV2.prototype.show = function () {
     this.m_player.vx = this.m_speed;
 }
-    
 
 CharacterV2.prototype.getPlayer = function () {
     return this.m_player;
@@ -199,6 +197,9 @@ CharacterV2.prototype.draw = function() {
     this.m_player.draw();
 }
 
+CharacterV2.prototype.getVxForScore = function() {
+    return this.vxForScrore;
+}
 
 CharacterV2.prototype.getX = function() {
     return this.m_player.x;
@@ -208,7 +209,6 @@ CharacterV2.prototype.getX = function() {
 CharacterV2.prototype.getY = function() {
     return this.m_player.y;
 }
-    
 
 CharacterV2.prototype.setX = function( _x) {
     this.m_player.x = _x;
