@@ -1,4 +1,5 @@
 # LD 35
+my entry for my first ludum dare (Compo)
 
 [Play Online](https://guillaume-gomez.github.io/LD35/)
 ![Game](css/screen-shot.png "ScreenShot")
